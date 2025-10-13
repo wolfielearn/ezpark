@@ -1,2 +1,2 @@
 # ezpark
-Smart Parking Syestem
+Smart Parking System
