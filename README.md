@@ -1,5 +1,4 @@
-# ezpark
-Smart Parking System 🅿️
+# ezpark -  Smart Parking System 🅿️
 
 A comprehensive digital platform that eliminates urban parking challenges through real-time availability, intelligent reservations, and automated payments.µ
 
@@ -31,25 +30,51 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
 ## PHASE 1: STRATEGIC DDD  ✅
 
 ### 1. BOUNDED CONTEXTS IDENTIFICATION
-   <img width="700" height="700" alt="image" src="https://github.com/user-attachments/assets/5eec46be-b5d7-4386-93f9-e1f49bc55589" />
 
-    ✅ CUSTOMER MANAGEMENT - User accounts, vehicles, profiles 
-    ✅ PARKING MANAGEMENT - Lots, spots, real-time availability  
-    ✅ RESERVATION & SESSIONS - Booking lifecycle, session tracking
-    ✅ PAYMENT & PRICING - Dynamic pricing, invoices, payments
+    ✅ CUSTOMER MANAGEMENT - Responsibility: User accounts and vehicles
+      - Customer registration and profiles
+      - Vehicle management (multiple vehicles per customer)
+      - Preferences and settings
+      - Authentication and authorization
+         
+    ✅ PARKING MANAGEMENT - Responsibility: Physical parking infrastructure
+      - Parking lots and spots management
+      - Real-time availability
+      - Spot types and restrictions
+      - Occupancy tracking
+    
+    ✅ RESERVATION & SESSIONS - Responsibility: Booking and actual parking
+      - Reservation lifecycle
+      - Time slot management
+      - Session tracking (check-in/check-out)
+      - Conflict prevention
+      
+    ✅ PAYMENT & PRICING - Responsibility: Money matters
+      - Dynamic pricing strategies
+      - Invoice generation
+      - Payment processing
+      - Receipts and billing
 
 ### 2. UBIQUITOUS LANGUAGE DEFINITION
-      Customer Context: Customer, Vehicle, LicensePlate, VehicleType
-      Parking Context: ParkingLot, ParkingSpot, ParkingSpotType, Occupancy
-      Reservation Context: Reservation, TimeSlot, ParkingSession, CheckIn, CheckOut
-      Payment Context: PricingStrategy, Invoice, Payment, Receipt
+      Customer Context: 
+            - Customer, Vehicle, LicensePlate, VehicleType
+      Parking Context: 
+            - ParkingLot, ParkingSpot, ParkingSpotType, Occupancy
+      Reservation Context: 
+            - Reservation, TimeSlot, ParkingSession, CheckIn, CheckOut
+      Payment Context: 
+            - PricingStrategy, Invoice, Payment, Receipt
 
 ### 3. CONTEXT MAPPING & INTEGRATION
+
+<img width="400" height="500" alt="image" src="https://github.com/user-attachments/assets/78111907-8bc9-4d91-93b4-f3cd8b3eaf09" />
+
 
       Customer ↔ Reservation: Partnership
       Parking → Reservation: Customer-Supplier  
       Payment → Reservation: Customer-Supplier
       Communication: REST APIs + Kafka Events
+
 
 ### 4. EVENT STORMING
 
@@ -66,11 +91,9 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
       3. System calculates price based on:
          - Base hourly rate
          - Vehicle type multiplier
-         - Peak/off-peak pricing
-         - Special event surcharges
          - Loyalty discounts
       4. Customer confirms reservation
-      5. System holds payment authorization
+      5. System holds payment
 
       Business Rules:
       - Minimum 15-minute advance booking
@@ -78,4 +101,10 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
       - 15-minute grace period for arrival
       - Auto-cancel if payment fails
       - No double-booking allowed for same spot/time
+
+<img width="600" height="879" alt="image" src="https://github.com/user-attachments/assets/eb219378-35d3-404f-a5f8-13d38835e5b9" />
+<img width="600" height="879" alt="image" src="https://github.com/user-attachments/assets/7494bcdb-e5d5-4891-aedd-8033f5a115b1" />
+
+
+
 
