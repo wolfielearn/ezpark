@@ -1,7 +1,7 @@
 package com.ezpark.io.customer.domain.model;
 
 
-import com.parking.shared.kernel.CustomerId;
+import com.ezpark.io.shared.kernel.CustomerId;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
