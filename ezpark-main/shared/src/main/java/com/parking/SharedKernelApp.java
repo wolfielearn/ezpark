@@ -4,10 +4,11 @@ package com.parking;
  * Hello world!
  *
  */
-public class App 
+public class SharedKernelApp
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+
+        System.out.println( "library dependency" );
     }
 }
