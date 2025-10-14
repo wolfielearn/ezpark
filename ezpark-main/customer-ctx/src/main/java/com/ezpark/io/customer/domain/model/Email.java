@@ -1,4 +1,4 @@
-package com.ezpark.io.domain.model;
+package com.ezpark.io.customer.domain.model;
 
 public record Email(String value) {
     public Email {

@@ -1,4 +1,4 @@
-package com.ezpark.io.domain.model;
+package com.ezpark.io.customer.domain.model;
 
 public record LicensePlate(String value) {
     public LicensePlate {

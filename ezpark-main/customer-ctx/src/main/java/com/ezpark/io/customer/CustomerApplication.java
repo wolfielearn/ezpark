@@ -1,12 +1,12 @@
-package com.parking.io;
+package com.ezpark.io.customer;
 
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ParkingApplication {
+public class CustomerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ParkingApplication.class, args);
+        SpringApplication.run(CustomerApplication.class, args);
     }
 }

@@ -1,12 +1,12 @@
-package com.parking.io;
+package com.parking.io.parking;
 
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ReservationApplication {
+public class ParkingApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ReservationApplication.class, args);
+        SpringApplication.run(ParkingApplication.class, args);
     }
 }

@@ -1,4 +1,4 @@
-package com.ezpark.io.domain.model;
+package com.ezpark.io.customer.domain.model;
 
 
 import com.parking.shared.kernel.CustomerId;
