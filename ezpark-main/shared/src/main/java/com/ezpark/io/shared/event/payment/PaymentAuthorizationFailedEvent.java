@@ -1,0 +1,23 @@
+package com.ezpark.io.shared.event.payment;
+
+
+import com.ezpark.io.shared.event.DomainEvent;
+import com.ezpark.io.shared.kernel.ReservationId;
+import java.math.BigDecimal;
+
+public class PaymentAuthorizationFailedEvent extends DomainEvent {
+    private final ReservationId reservationId;
+    private final BigDecimal attemptedAmount;
+    private final String failureReason;
+
+    public PaymentAuthorizationFailedEvent(ReservationId reservationId,
+                                           BigDecimal attemptedAmount, String failureReason) {
+        this.reservationId = reservationId;
+        this.attemptedAmount = attemptedAmount;
+        this.failureReason = failureReason;
+    }
+
+    public ReservationId getReservationId() { return reservationId; }
+    public BigDecimal getAttemptedAmount() { return attemptedAmount; }
+    public String getFailureReason() { return failureReason; }
+}
