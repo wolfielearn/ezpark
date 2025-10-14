@@ -11,7 +11,7 @@ The Parking Pain Points
       💳 Manual Processes: Cash payments and manual ticketing cause delays
       👻 No Real-time Visibility: Lack of live spot availability information
       📅 Reservation Conflicts: Double-booking and scheduling issues
-
+      
 Our Solution
 
 A digital ecosystem connecting drivers with parking spots in real-time, enabling seamless reservations, automated payments, and optimized space management.
@@ -56,6 +56,7 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
       - Receipts and billing
 
 ### 2. UBIQUITOUS LANGUAGE DEFINITION
+
       Customer Context: 
             - Customer, Vehicle, LicensePlate, VehicleType
       Parking Context: 
@@ -64,46 +65,49 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
             - Reservation, TimeSlot, ParkingSession, CheckIn, CheckOut
       Payment Context: 
             - PricingStrategy, Invoice, Payment, Receipt
-
+            
 ### 3. CONTEXT MAPPING & INTEGRATION
 
 <img width="400" height="500" alt="image" src="https://github.com/user-attachments/assets/78111907-8bc9-4d91-93b4-f3cd8b3eaf09" />
-
 
       Customer ↔ Reservation: Partnership
       Parking → Reservation: Customer-Supplier  
       Payment → Reservation: Customer-Supplier
       Communication: REST APIs + Kafka Events
-
-
+      
 ### 4. EVENT STORMING
-
-      Commands: MakeReservation, StartParkingSession, ProcessPayment
-      Events: ReservationCreated, CheckInCompleted, PaymentProcessed
-
-### 5. Business Flow:
-      1. Customer selects time slot (start/end datetime)
-      2. System checks:
-         - Spot availability for that exact period
-         - No conflicts with existing reservations
-         - Customer has valid payment method
-         - Vehicle type compatibility
-      3. System calculates price based on:
-         - Base hourly rate
-         - Vehicle type multiplier
-         - Loyalty discounts
-      4. Customer confirms reservation
-      5. System holds payment
-
-      Business Rules:
-      - Minimum 15-minute advance booking
-      - Maximum 30-day advance booking
-      - 15-minute grace period for arrival
-      - Auto-cancel if payment fails
-      - No double-booking allowed for same spot/time
-
-<img width="600" height="879" alt="image" src="https://github.com/user-attachments/assets/eb219378-35d3-404f-a5f8-13d38835e5b9" />
-<img width="600" height="879" alt="image" src="https://github.com/user-attachments/assets/7494bcdb-e5d5-4891-aedd-8033f5a115b1" />
+      1.  Customer Registers → Adds Vehicles
+      2.  Requests Reservation → System checks availability
+      3.  Availability Confirmed → Payment authorized (hold funds)
+      4.  Payment Authorized → Spot reserved
+      5.  Spot Reserved → Reservation confirmed
+      6.  Customer checks in → Parking session starts
+      7.  Customer checks out → Parking session ends
+      8.  System generates invoice → Processes payment
+      9.  Payment processed → Spot released
+      🎮 Commands & events
+            RegisterCustomer	--> CustomerRegistered
+            RequestReservation-->	ReservationRequested
+            CheckAvailability-->	AvailabilityConfirmed
+            AuthorizePayment	System policy	PaymentAuthorized
+            ReserveSpot	System policy	SpotReserved
+            ConfirmReservation	System policy	ReservationConfirmed
+            CheckInVehicle	User action	CheckInCompleted
+            CheckOutVehicle	User action	CheckOutCompleted
+            GenerateInvoice	System policy	InvoiceGenerated
+            ProcessPayment	System policy	PaymentProcessed
+            ReleaseSpot	System policy	SpotReleased
+      📋 Policies (Business Rules)
+            When [Event] happens, then [Action] should be taken:
+            When Reservation Requested → Then Check Availability
+            When Availability Confirmed → Then Authorize Payment
+            When Payment Authorized → Then Reserve Spot
+            When Spot Reserved → Then Confirm Reservation
+            When Check Out Completed → Then Generate Invoice
+            When Payment Processed → Then Release Spot
+            When Spot Released → Then Send Receipt
+### 5.Business workflow 
+<img width="900" height="1500" alt="Smart Parking System - Complete Flow" src="https://github.com/user-attachments/assets/8f018891-841d-45e5-b432-466802fa4041" />
 
 
 
