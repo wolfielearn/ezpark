@@ -1,4 +1,4 @@
-# ezpark -  Smart Parking System 🅿️
+# ezpark -  Easy Parking System 🅿️
 
 A comprehensive digital platform that eliminates urban parking challenges through real-time availability, intelligent reservations, and automated payments.µ
 
