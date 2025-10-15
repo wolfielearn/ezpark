@@ -1,9 +1,12 @@
 package com.ezpark.io.customer.domain.port.inbound;
 
-import com.ezpark.io.shared.event.payment.PaymentCapturedEvent;
-import com.ezpark.io.shared.event.reservation.ReservationFailedEvent;
+//import com.ezpark.io.shared.event.payment.PaymentCapturedEvent;
+//import com.ezpark.io.shared.event.reservation.ReservationFailedEvent;
 
 public interface CustomerEventHandler {
-    void handlePaymentCaptured(PaymentCapturedEvent event);
-    void handleReservationFailed(ReservationFailedEvent event);
+
+    void handlePaymentCaptured();
+    //void handlePaymentCaptured(PaymentCapturedEvent event);
+    void handleReservationFailed();
+    //void handleReservationFailed(ReservationFailedEvent event);
 }

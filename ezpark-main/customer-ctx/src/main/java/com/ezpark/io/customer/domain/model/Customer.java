@@ -35,13 +35,20 @@ public class Customer {
     public static Customer create(String name, String email) {
         CustomerId id = CustomerId.newId();
         Email validatedEmail = new Email(email);
+
+        // Publish domain event here
+
         return new Customer(id, validatedEmail, name);
     }
 
     // Domain method
-    public void addVehicle(String licensePlate, VehicleType type) {
-        LicensePlate plate = new LicensePlate(licensePlate);
-        Vehicle vehicle = new Vehicle(plate, type);
+        public void addVehicle(LicensePlate licensePlate, VehicleType type) {
+
+            // Business invariant: Prevent duplicate vehicles
+            if (vehicles.stream().anyMatch(v -> v.getLicensePlate().equals(licensePlate))) {
+                throw new IllegalArgumentException("Vehicle with license plate " + licensePlate + " already exists");
+            }
+        Vehicle vehicle = new Vehicle(licensePlate, type);
         this.vehicles.add(vehicle);
     }
 
