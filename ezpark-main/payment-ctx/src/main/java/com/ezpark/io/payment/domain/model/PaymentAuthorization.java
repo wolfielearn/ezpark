@@ -43,10 +43,9 @@ public class PaymentAuthorization {
     }
 
     // Factory method
-    public static PaymentAuthorization create(ReservationId reservationId, BigDecimal amount, PaymentMethod method) {
+    public static PaymentAuthorization create(ReservationId reservationId, Amount amount, PaymentMethod method) {
         PaymentAuthorizationId id = PaymentAuthorizationId.newId();
-        Amount validatedAmount = new Amount(amount);
-        return new PaymentAuthorization(id, reservationId, validatedAmount, method);
+        return new PaymentAuthorization(id, reservationId, amount, method);
     }
 
     // Core business logic
