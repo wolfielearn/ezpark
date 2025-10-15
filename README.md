@@ -107,7 +107,7 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
             When Payment Processed → Then Release Spot
             When Spot Released → Then Send Receipt
 ### 5.Business workflow 
-<img width="900" height="1500" alt="Smart Parking System - Complete Flow" src="https://github.com/user-attachments/assets/8f018891-841d-45e5-b432-466802fa4041" />
+<img width="900" height="1884" alt="Smart Parking System - sequence Flow" src="https://github.com/user-attachments/assets/11bc1509-8ee1-40ba-8c4e-85a011f9feee" />
 
 
 
