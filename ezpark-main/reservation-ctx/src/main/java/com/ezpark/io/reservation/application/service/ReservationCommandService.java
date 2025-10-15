@@ -1,4 +1,4 @@
-package com.ezpark.io.reservation.domain.port.inbound;
+package com.ezpark.io.reservation.application.service;
 
 
 import com.ezpark.io.shared.kernel.ReservationId;
