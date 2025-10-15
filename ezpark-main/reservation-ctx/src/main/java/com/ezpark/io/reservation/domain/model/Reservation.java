@@ -46,6 +46,9 @@ public class Reservation {
         return new Reservation(id, customerId, spotId, timeSlot);
     }
 
+
+    // In confirm(), you could publish ReservationConfirmedEvent
+
     // Core business logic
     public void confirm(PaymentAuthorizationId paymentAuthId) {
         if (this.status != ReservationStatus.PENDING) {
@@ -55,6 +58,7 @@ public class Reservation {
         this.status = ReservationStatus.CONFIRMED;
     }
 
+    // In cancel(), you could publish ReservationCancelledEvent
     public void cancel() {
         if (this.status == ReservationStatus.COMPLETED || this.status == ReservationStatus.ACTIVE) {
             throw new IllegalStateException("Cannot cancel completed or active reservation");
@@ -69,6 +73,7 @@ public class Reservation {
         this.status = ReservationStatus.ACTIVE;
     }
 
+    // In markAsCompleted(), you could publish ReservationCompletedEvent
     public void markAsCompleted() {
         if (this.status != ReservationStatus.ACTIVE) {
             throw new IllegalStateException("Only active reservations can be completed");

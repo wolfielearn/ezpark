@@ -3,6 +3,10 @@ package com.ezpark.io.parking.domain.model;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
 import jakarta.persistence.*;
+import com.ezpark.io.parking.domain.event.SpotReservedEvent;
+import com.ezpark.io.parking.domain.event.CheckInCompletedEvent;
+import com.ezpark.io.parking.domain.event.CheckOutCompletedEvent;
+import com.ezpark.io.parking.domain.event.SpotMaintenanceEvent;
 
 @Entity
 @Table(name = "parking_spots")
@@ -32,6 +36,8 @@ public class ParkingSpot {
         this.status = SpotStatus.AVAILABLE;
     }
 
+
+    // In reserve(), you could publish SpotReservedEvent
     // Core business logic
     public void reserve(ReservationId reservationId) {
         if (this.status != SpotStatus.AVAILABLE) {
@@ -41,6 +47,7 @@ public class ParkingSpot {
         this.status = SpotStatus.RESERVED;
     }
 
+    // In checkIn(), you could publish CheckInCompletedEvent
     public void checkIn() {
         if (this.status != SpotStatus.RESERVED) {
             throw new IllegalStateException("Only reserved spots can be checked in");
@@ -48,6 +55,7 @@ public class ParkingSpot {
         this.status = SpotStatus.OCCUPIED;
     }
 
+    // In checkOut(), you could publish CheckOutCompletedEvent
     public void checkOut() {
         if (this.status != SpotStatus.OCCUPIED) {
             throw new IllegalStateException("Only occupied spots can be checked out");
@@ -56,6 +64,7 @@ public class ParkingSpot {
         this.currentReservationId = null;
     }
 
+    // In markForMaintenance(), you could publish SpotMaintenanceEvent
     public void markForMaintenance() {
         this.status = SpotStatus.MAINTENANCE;
         this.currentReservationId = null;
