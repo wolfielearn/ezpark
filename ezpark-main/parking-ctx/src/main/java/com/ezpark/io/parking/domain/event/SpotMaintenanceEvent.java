@@ -1,4 +1,4 @@
-package com.ezpark.io.shared.event.parking;
+package com.ezpark.io.parking.domain.event;
 
 
 import com.ezpark.io.shared.event.DomainEvent;

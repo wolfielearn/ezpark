@@ -1,4 +1,4 @@
-package com.ezpark.io.shared.event.customer;
+package com.ezpark.io.customer.domain.event;
 
 
 import com.ezpark.io.shared.event.DomainEvent;

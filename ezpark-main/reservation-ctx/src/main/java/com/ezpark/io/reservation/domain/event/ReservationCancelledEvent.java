@@ -1,4 +1,4 @@
-package com.ezpark.io.shared.event.reservation;
+package com.ezpark.io.reservation.domain.event;
 
 
 import com.ezpark.io.shared.event.DomainEvent;

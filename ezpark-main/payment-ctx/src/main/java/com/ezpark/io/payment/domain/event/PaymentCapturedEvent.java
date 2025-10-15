@@ -1,4 +1,4 @@
-package com.ezpark.io.shared.event.payment;
+package com.ezpark.io.payment.domain.event;
 
 
 import com.ezpark.io.shared.event.DomainEvent;
