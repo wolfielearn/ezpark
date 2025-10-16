@@ -2,8 +2,9 @@ package com.ezpark.io.payment.domain.port.outbound;
 
 
 
-import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.CustomerId;
+import com.ezpark.io.shared.kernel.ReservationId;
+
 import java.math.BigDecimal;
 import java.time.Duration;
 
