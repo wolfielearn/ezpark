@@ -34,26 +34,22 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
     ✅ CUSTOMER MANAGEMENT - Responsibility: User accounts and vehicles
       - Customer registration and profiles
       - Vehicle management (multiple vehicles per customer)
-      - Preferences and settings
       - Authentication and authorization
          
     ✅ PARKING MANAGEMENT - Responsibility: Physical parking infrastructure
       - Parking lots and spots management
       - Real-time availability
       - Spot types and restrictions
-      - Occupancy tracking
-    
+      
     ✅ RESERVATION & SESSIONS - Responsibility: Booking and actual parking
       - Reservation lifecycle
       - Time slot management
-      - Session tracking (check-in/check-out)
-      - Conflict prevention
+      - Session tracking (check-in/check-out)    
       
     ✅ PAYMENT & PRICING - Responsibility: Money matters
       - Dynamic pricing strategies
-      - Invoice generation
       - Payment processing
-      - Receipts and billing
+      - Receipts
 
 ### 2. UBIQUITOUS LANGUAGE DEFINITION
 
