@@ -10,6 +10,7 @@
     <artifactId>customer-ctx</artifactId>
     <name>EZPark Customer Context</name>
     <description>Customer management bounded context</description>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!-- ===== SHARED DEPENDENCIES ===== -->
@@ -66,11 +67,11 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
     </build>
 </project>

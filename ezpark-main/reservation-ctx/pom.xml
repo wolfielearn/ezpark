@@ -8,6 +8,8 @@
     </parent>
 
     <artifactId>reservation-ctx</artifactId>
+    <packaging>jar</packaging>
+
 
     <dependencies>
         <dependency>

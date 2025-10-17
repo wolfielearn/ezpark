@@ -7,9 +7,10 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>parking-context</artifactId>
+    <artifactId>parking-ctx</artifactId>
     <name>EZPark Parking Context</name>
     <description>Parking spot management bounded context</description>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!-- Shared Kernel and Infrastructure -->
@@ -52,12 +53,12 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 </project>
