@@ -2,9 +2,11 @@ package com.ezpark.io.reservation.domain.port.outbound;
 
 
 import com.ezpark.io.reservation.domain.port.outbound.model.ReservationCustomerView;
-import com.ezpark.io.shared.kernel.CustomerId;
+
+import java.util.UUID;
+
 
 public interface CustomerAntiCorruptionService {
-    ReservationCustomerView getCustomerForReservation(CustomerId customerId);
-    boolean canCustomerMakeReservations(CustomerId customerId);
+    ReservationCustomerView getCustomerForReservation(UUID customerId);
+    boolean canCustomerMakeReservations(UUID customerId);
 }

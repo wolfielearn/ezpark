@@ -1,8 +1,8 @@
 package com.ezpark.io.payment.domain.port.outbound;
 
 
-import com.ezpark.io.shared.kernel.ReservationId;
+import java.util.UUID;
 
 public interface ReservationAntiCorruptionService {
-    ReservationBillingView getReservationForBilling(ReservationId reservationId);
+    ReservationBillingView getReservationForBilling(UUID reservationId);
 }
