@@ -4,18 +4,22 @@ import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
 
 @Entity
 @Table(name = "payment_authorizations")
+@AttributeOverrides({
+        @AttributeOverride(name = "id.value", column = @Column(name = "payment_auth_id")),
+        @AttributeOverride(name = "reservationId.value", column = @Column(name = "reservation_id")),
+        @AttributeOverride(name = "amount.value", column = @Column(name = "amount_value"))
+})
 public class PaymentAuthorization {
     @EmbeddedId
     private PaymentAuthorizationId id;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "reservation_id"))
+    @AttributeOverride(name = "reservationId.value", column = @Column(name = "reservation_id"))
     private ReservationId reservationId;
 
     @Embedded
