@@ -1,6 +1,7 @@
 -- Initialize EZPark Database Schemas
 -- This runs automatically when PostgreSQL starts
 
+-- creation of schema is delegated to resources/schema.sql
 -- Create schemas for each bounded context
 CREATE SCHEMA IF NOT EXISTS customer;
 CREATE SCHEMA IF NOT EXISTS reservation;
@@ -23,10 +24,14 @@ GRANT ALL ON SCHEMA parking TO ezpark_user;
 GRANT ALL ON SCHEMA payment TO ezpark_user;
 
 -- Grant usage on public schema (for Hibernate, etc.)
-GRANT USAGE ON SCHEMA public TO ezpark;
+GRANT USAGE ON SCHEMA public TO ezpark_user;
 
 -- Set default search path (optional)
 ALTER ROLE ezpark_user SET search_path TO customer,reservation,parking,payment,public;
 
 -- Log successful initialization
-RAISE NOTICE ' EZPark database schemas initialized successfully';
+DO $$
+BEGIN
+    RAISE NOTICE 'EZPark database schemas initialized successfully';
+END
+$$;
