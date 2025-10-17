@@ -1,0 +1,70 @@
+version: '3.8'
+services:
+  ezpark-db:
+    image: postgres:15
+    container_name: ezpark-postgres
+    environment:
+      POSTGRES_DB: ezpark_db
+      POSTGRES_USER: ezpark_user
+      POSTGRES_PASSWORD: ezpark123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./application/src/main/resources/scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - ezpark-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ezpark_user -d ezpark_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@mail.com"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+    ports:
+      - "80:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin  # Add persistent volume
+    depends_on:
+      - ezpark-db
+    networks:
+      - ezpark-network
+  ezpark-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=ezpark-db #
+      - DB_PORT=5432
+      - DB_NAME=ezpark_db
+      - DB_USERNAME=ezpark_user
+      - DB_PASSWORD=ezpark123
+      - DDL_AUTO=update
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      ezpark-db:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+    networks:
+      - ezpark-network
+
+networks:
+  ezpark-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
