@@ -1,2 +1,4 @@
-server:
-  port: 8084
+#server:
+#  port: 8084
+# we only have one Application deployable Unit so we no more need for server.port for all context
+# Except for the application module

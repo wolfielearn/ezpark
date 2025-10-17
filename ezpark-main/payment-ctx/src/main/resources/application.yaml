@@ -1,24 +1,32 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/ezpark_db?currentSchema=payment
-    username: ezpark_user
-    password: ezpark123
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: payment
-        format_sql: true
-    show-sql: true
-  kafka:
-    bootstrap-servers: localhost:9092
-
-server:
-  port: 8084
-
-logging:
-  level:
-    com.ezpark.io.payment: DEBUG
-    org.hibernate.SQL: DEBUG
+#spring:
+#  datasource:
+#    # url: jdbc:postgresql://localhost:5432/ezpark_db?currentSchema=payment
+#    # in case we have multiple deployable unit each have datasource or scheama
+#    url: jdbc:postgresql://localhost:5432/ezpark_db
+#    username: ezpark_user
+#    password: ezpark123
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        #default_schema: payment
+#        format_sql: true
+#    show-sql: false
+#
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#
+#server:
+#  port: 8080
+#
+#logging:
+#  level:
+#    com.ezpark.io.payment: DEBUG
+#    org.hibernate.SQL: DEBUG
+#    logging:
+#      level:
+#        org:
+#          springframework:
+#            kafka: DEBUG
