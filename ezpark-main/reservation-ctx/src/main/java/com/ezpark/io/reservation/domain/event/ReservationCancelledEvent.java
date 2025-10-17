@@ -5,18 +5,20 @@ import com.ezpark.io.shared.event.DomainEvent;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.CustomerId;
 
+import java.util.UUID;
+
 public class ReservationCancelledEvent extends DomainEvent {
-    private final ReservationId reservationId;
-    private final CustomerId customerId;
+    private final UUID reservationId;
+    private final UUID customerId;
     private final String reason;
 
-    public ReservationCancelledEvent(ReservationId reservationId, CustomerId customerId, String reason) {
+    public ReservationCancelledEvent(UUID reservationId, UUID customerId, String reason) {
         this.reservationId = reservationId;
         this.customerId = customerId;
         this.reason = reason;
     }
 
-    public ReservationId getReservationId() { return reservationId; }
-    public CustomerId getCustomerId() { return customerId; }
+    public UUID getReservationId() { return reservationId; }
+    public UUID getCustomerId() { return customerId; }
     public String getReason() { return reason; }
 }

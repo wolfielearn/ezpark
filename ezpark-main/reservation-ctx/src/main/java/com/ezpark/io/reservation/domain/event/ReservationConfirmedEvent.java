@@ -4,22 +4,24 @@ package com.ezpark.io.reservation.domain.event;
 import com.ezpark.io.shared.event.DomainEvent;
 import com.ezpark.io.shared.kernel.*;
 
-public class ReservationConfirmedEvent extends DomainEvent {
-    private final ReservationId reservationId;
-    private final PaymentAuthorizationId paymentAuthId;
-    private final SpotId spotId;
-    private final CustomerId customerId;
+import java.util.UUID;
 
-    public ReservationConfirmedEvent(ReservationId reservationId, PaymentAuthorizationId paymentAuthId,
-                                     SpotId spotId, CustomerId customerId) {
+public class ReservationConfirmedEvent extends DomainEvent {
+    private final UUID reservationId;
+    private final UUID paymentAuthId;
+    private final String spotId;
+    private final UUID customerId;
+
+    public ReservationConfirmedEvent(UUID reservationId, UUID paymentAuthId,
+                                     String spotId, UUID customerId) {
         this.reservationId = reservationId;
         this.paymentAuthId = paymentAuthId;
         this.spotId = spotId;
         this.customerId = customerId;
     }
 
-    public ReservationId getReservationId() { return reservationId; }
-    public PaymentAuthorizationId getPaymentAuthId() { return paymentAuthId; }
-    public SpotId getSpotId() { return spotId; }
-    public CustomerId getCustomerId() { return customerId; }
+    public UUID getReservationId() { return reservationId; }
+    public UUID getPaymentAuthId() { return paymentAuthId; }
+    public String getSpotId() { return spotId; }
+    public UUID getCustomerId() { return customerId; }
 }

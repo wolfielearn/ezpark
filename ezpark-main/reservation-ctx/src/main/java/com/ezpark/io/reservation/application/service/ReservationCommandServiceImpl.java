@@ -37,31 +37,32 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
     }
 
     @Override
-    public ReservationId createReservation(CustomerId customerId, SpotId spotId,TimeSlot timeSlot) {
+    public ReservationId createReservation(CustomerId customerUuid, SpotId spotId, TimeSlot timeSlot) {
+
         // 1. Validate customer can make reservations
-        var customerView = customerACL.getCustomerForReservation(customerId);
+        var customerView = customerACL.getCustomerForReservation(customerUuid.value());
         if (!customerView.hasVehicles()) {
             throw new IllegalArgumentException("Customer must have vehicles to make reservations");
         }
         Instant startTime = timeSlot.startTime();
         Instant endTime = timeSlot.endTime();
         // 2. Check spot availability
-        boolean isAvailable = parkingACL.checkAvailability(spotId, startTime, endTime);
+        boolean isAvailable = parkingACL.checkAvailability(spotId.value(), startTime, endTime);
         if (!isAvailable) {
             eventPublisher.publish(new ReservationFailedEvent(
-                    ReservationId.newId(), spotId, customerId, "Spot not available"
+                    ReservationId.newId(), spotId, customerUuid, "Spot not available"
             ));
             throw new IllegalArgumentException("Spot not available for requested time");
         }
 
         // 3. Create reservation
 
-        Reservation reservation = Reservation.create(customerId, spotId, timeSlot);
+        Reservation reservation = Reservation.create(customerUuid, spotId, timeSlot);
         reservationRepository.save(reservation);
 
         // 4. Request payment authorization
         eventPublisher.publish(new ReservationRequestedEvent(
-                customerId, spotId, startTime, endTime
+                customerUuid.value(), spotId.value(), startTime, endTime
         ));
 
         return reservation.getId();
@@ -76,10 +77,10 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         reservationRepository.save(reservation);
 
         // Reserve the physical spot
-        parkingACL.reserveSpot(reservation.getSpotId(), reservationId);
+        parkingACL.reserveSpot(reservation.getSpotId().value(), reservationId.value());
 
         eventPublisher.publish(new ReservationConfirmedEvent(
-                reservationId, paymentAuthId, reservation.getSpotId(), reservation.getCustomerId()
+                reservationId.value(), paymentAuthId.value(), reservation.getSpotId().value(), reservation.getCustomerId().value()
         ));
     }
 
@@ -92,7 +93,9 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         reservationRepository.save(reservation);
 
         eventPublisher.publish(new ReservationCancelledEvent(
-                reservationId, reservation.getCustomerId(), "Customer cancelled"
+                reservationId.value(),
+                reservation.getCustomerId().value(),
+                "Customer cancelled"
         ));
     }
 
@@ -113,6 +116,6 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         reservation.markAsCompleted();
         reservationRepository.save(reservation);
 
-        eventPublisher.publish(new ReservationCompletedEvent(reservationId));
+        eventPublisher.publish(new ReservationCompletedEvent(reservationId.value()));
     }
 }

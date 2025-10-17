@@ -4,12 +4,14 @@ package com.ezpark.io.reservation.domain.event;
 import com.ezpark.io.shared.event.DomainEvent;
 import com.ezpark.io.shared.kernel.ReservationId;
 
-public class ReservationCompletedEvent extends DomainEvent {
-    private final ReservationId reservationId;
+import java.util.UUID;
 
-    public ReservationCompletedEvent(ReservationId reservationId) {
+public class ReservationCompletedEvent extends DomainEvent {
+    private final UUID reservationId;
+
+    public ReservationCompletedEvent(UUID reservationId) {
         this.reservationId = reservationId;
     }
 
-    public ReservationId getReservationId() { return reservationId; }
+    public UUID getReservationId() { return reservationId; }
 }
