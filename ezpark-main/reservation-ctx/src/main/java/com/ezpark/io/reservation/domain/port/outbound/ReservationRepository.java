@@ -6,7 +6,6 @@ import com.ezpark.io.reservation.domain.model.ReservationStatus;
 import com.ezpark.io.shared.kernel.CustomerId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
