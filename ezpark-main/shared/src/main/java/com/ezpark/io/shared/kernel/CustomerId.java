@@ -4,6 +4,11 @@ import java.util.UUID;
 
 // Cross-context identifiers
 public record CustomerId(UUID value) {
+
+    // JPA needs this constructor for reflection
+    public CustomerId() {
+        this(UUID.randomUUID()); // or this(null) depending on your needs
+    }
     public CustomerId {
         if (value == null) throw new IllegalArgumentException("CustomerId cannot be null");
     }

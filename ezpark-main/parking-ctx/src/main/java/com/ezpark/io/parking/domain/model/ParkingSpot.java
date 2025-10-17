@@ -10,7 +10,12 @@ import com.ezpark.io.parking.domain.event.SpotMaintenanceEvent;
 
 @Entity
 @Table(name = "parking_spots")
+@AttributeOverrides({
+        @AttributeOverride(name = "id.value", column = @Column(name = "Spot_id")),
+        @AttributeOverride(name = "currentReservationId.value", column = @Column(name = "current_reservation_id"))
+})
 public class ParkingSpot {
+
     @EmbeddedId
     private SpotId id;
 
@@ -24,7 +29,6 @@ public class ParkingSpot {
     private SpotStatus status;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "current_reservation_id"))
     private ReservationId currentReservationId;
 
     protected ParkingSpot() {} // For JPA
