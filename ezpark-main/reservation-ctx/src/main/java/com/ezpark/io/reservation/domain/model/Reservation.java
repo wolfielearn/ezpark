@@ -7,7 +7,7 @@ import com.ezpark.io.shared.kernel.SpotId;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "reservations")
+@Table(name = "reservation", schema = "reservation")
 @AttributeOverrides({
         @AttributeOverride(name = "id.value", column = @Column(name = "reservation_id")),
         @AttributeOverride(name = "customerId.value", column = @Column(name = "customer_id")),

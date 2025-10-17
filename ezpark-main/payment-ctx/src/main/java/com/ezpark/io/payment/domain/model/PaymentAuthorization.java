@@ -8,7 +8,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Entity
-@Table(name = "payment_authorizations")
+@Table(name = "payment_authorization", schema = "payment")
 @AttributeOverrides({
         @AttributeOverride(name = "id.value", column = @Column(name = "payment_auth_id")),
         @AttributeOverride(name = "reservationId.value", column = @Column(name = "reservation_id")),

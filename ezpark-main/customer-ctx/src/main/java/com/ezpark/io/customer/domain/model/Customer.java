@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customer", schema = "customer")
 @AttributeOverrides({
         @AttributeOverride(name = "id.value", column = @Column(name = "customer_id")),
         @AttributeOverride(name = "email.value", column = @Column(name = "email")),
@@ -25,7 +25,9 @@ public class Customer {
     private String name;
 
     @ElementCollection
-    @CollectionTable(name = "customer_vehicles", joinColumns = @JoinColumn(name = "customer_id"))
+    @CollectionTable(name = "customer_vehicles",
+                    joinColumns = @JoinColumn(name = "customer_id"),
+                    schema = "customer")
     private List<Vehicle> vehicles = new ArrayList<>();
 
     @Transient

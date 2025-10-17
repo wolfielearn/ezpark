@@ -3,13 +3,9 @@ package com.ezpark.io.parking.domain.model;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
 import jakarta.persistence.*;
-import com.ezpark.io.parking.domain.event.SpotReservedEvent;
-import com.ezpark.io.parking.domain.event.CheckInCompletedEvent;
-import com.ezpark.io.parking.domain.event.CheckOutCompletedEvent;
-import com.ezpark.io.parking.domain.event.SpotMaintenanceEvent;
 
 @Entity
-@Table(name = "parking_spots")
+@Table(name = "parking", schema = "parking")
 @AttributeOverrides({
         @AttributeOverride(name = "id.value", column = @Column(name = "Spot_id")),
         @AttributeOverride(name = "currentReservationId.value", column = @Column(name = "current_reservation_id"))
