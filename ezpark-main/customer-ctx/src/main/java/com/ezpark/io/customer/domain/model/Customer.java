@@ -1,6 +1,8 @@
 package com.ezpark.io.customer.domain.model;
 
 
+import com.ezpark.io.customer.domain.event.CustomerRegisteredEvent;
+import com.ezpark.io.shared.event.DomainEvent;
 import com.ezpark.io.shared.kernel.CustomerId;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -9,12 +11,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
+@AttributeOverrides({
+        @AttributeOverride(name = "id.value", column = @Column(name = "customer_id")),
+        @AttributeOverride(name = "email.value", column = @Column(name = "email")),
+})
 public class Customer {
     @EmbeddedId
     private CustomerId id;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "email", unique = true))
     private Email email;
 
     private String name;
@@ -23,34 +28,47 @@ public class Customer {
     @CollectionTable(name = "customer_vehicles", joinColumns = @JoinColumn(name = "customer_id"))
     private List<Vehicle> vehicles = new ArrayList<>();
 
+    @Transient
+    private List<DomainEvent> domainEvents = new ArrayList<>(); //  Domain events
+
     protected Customer() {} // For JPA
 
-    private Customer(CustomerId id, Email email, String name) {
-        this.id = id;
+    private Customer(CustomerId customerId, Email email, String name) {
+        this.id = customerId;
         this.email = email;
         this.name = name;
+        this.domainEvents.add(
+                new CustomerRegisteredEvent(
+                        customerId.value(),
+                        name,
+                        email.value())
+        );
+
     }
 
     // Factory method
-    public static Customer create(String name, String email) {
+    public static Customer create(String name, Email email) {
         CustomerId id = CustomerId.newId();
-        Email validatedEmail = new Email(email);
-
         // Publish domain event here
-
-        return new Customer(id, validatedEmail, name);
+        return new Customer(id, email, name);
     }
 
     // Domain method
-        public void addVehicle(LicensePlate licensePlate, VehicleType type) {
+    public void addVehicle(LicensePlate licensePlate, VehicleType type) {
 
-            // Business invariant: Prevent duplicate vehicles
-            if (vehicles.stream().anyMatch(v -> v.getLicensePlate().equals(licensePlate))) {
-                throw new IllegalArgumentException("Vehicle with license plate " + licensePlate + " already exists");
-            }
+        // Business invariant: Prevent duplicate vehicles
+        if (vehicles.stream().anyMatch(v -> v.getLicensePlate().equals(licensePlate))) {
+            throw new IllegalArgumentException("Vehicle with license plate " + licensePlate + " already exists");
+        }
         Vehicle vehicle = new Vehicle(licensePlate, type);
         this.vehicles.add(vehicle);
-    }
+
+            /*this.domainEvents.add(new VehicleAddedEvent(
+                    id.getValue(),              // UUID primitive
+                    licensePlate.getValue(),    // String primitive
+                    type.name()                 // String primitive
+            ));*/
+     }
 
     // Business rule
     public boolean canMakeReservations() {

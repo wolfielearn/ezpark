@@ -8,26 +8,24 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "reservations")
+@AttributeOverrides({
+        @AttributeOverride(name = "id.value", column = @Column(name = "reservation_id")),
+        @AttributeOverride(name = "customerId.value", column = @Column(name = "customer_id")),
+        @AttributeOverride(name = "spotId.value", column = @Column(name = "spot_id")),
+        @AttributeOverride(name = "paymentAuthId.value", column = @Column(name = "payment_auth_id"))
+})
 public class Reservation {
     @EmbeddedId
     private ReservationId id;
-
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "customer_id"))
     private CustomerId customerId;
-
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "spot_id"))
     private SpotId spotId;
-
     @Embedded
     private TimeSlot timeSlot;
-
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
-
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "payment_auth_id"))
     private PaymentAuthorizationId paymentAuthId;
 
     protected Reservation() {} // For JPA
@@ -41,7 +39,7 @@ public class Reservation {
     }
 
     // Factory method
-    public static Reservation create(CustomerId customerId, SpotId spotId, TimeSlot timeSlot) {
+    public static Reservation create(CustomerId customerId, SpotId  spotId, TimeSlot timeSlot) {
         ReservationId id = ReservationId.newId();
         return new Reservation(id, customerId, spotId, timeSlot);
     }
@@ -87,4 +85,6 @@ public class Reservation {
     public SpotId getSpotId() { return spotId; }
     public ReservationStatus getStatus() { return status; }
     public TimeSlot getTimeSlot() { return timeSlot; }
+
+    public PaymentAuthorizationId getPaymentAuthId() { return paymentAuthId; }
 }
