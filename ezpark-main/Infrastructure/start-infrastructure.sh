@@ -18,7 +18,7 @@ until docker exec ezpark-postgres pg_isready -U postgres; do
 done
 
 echo ""
-echo "✅ INFRASTRUCTURE READY!"
+echo " INFRASTRUCTURE READY!"
 echo "======================================"
 echo "📊 Database: localhost:5432/ezpark_db"
 echo "👤 User: postgres / password"

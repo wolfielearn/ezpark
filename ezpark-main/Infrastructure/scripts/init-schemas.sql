@@ -29,4 +29,4 @@ GRANT USAGE ON SCHEMA public TO ezpark;
 ALTER ROLE ezpark_user SET search_path TO customer,reservation,parking,payment,public;
 
 -- Log successful initialization
-RAISE NOTICE '✅ EZPark database schemas initialized successfully';
+RAISE NOTICE ' EZPark database schemas initialized successfully';
