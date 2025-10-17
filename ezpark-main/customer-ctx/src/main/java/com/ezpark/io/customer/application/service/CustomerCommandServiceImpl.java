@@ -28,10 +28,13 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
         if (customerRepository.existsByEmail(email.value())) {
             throw new IllegalArgumentException("Customer with email " + email + " already exists");
         }
-        Customer customer = Customer.create(name, email.value());
-        customerRepository.save(customer);
+        Customer customer = Customer.create(name, email);
+        CustomerId savedCustomerId = customerRepository.save(customer).getId();
 
-        eventPublisher.publish(new CustomerRegisteredEvent(customer.getId(), email.value(), name));
+        eventPublisher.publish(new CustomerRegisteredEvent(
+                savedCustomerId.value(),
+                email.value(),
+                name));
 
         return customer.getId();
     }

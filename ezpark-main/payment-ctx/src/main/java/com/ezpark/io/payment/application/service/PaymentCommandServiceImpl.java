@@ -1,22 +1,20 @@
 package com.ezpark.io.payment.application.service;
 
 
+import com.ezpark.io.payment.domain.event.PaymentAuthorizedEvent;
+import com.ezpark.io.payment.domain.event.PaymentCapturedEvent;
+import com.ezpark.io.payment.domain.event.PaymentRefundedEvent;
 import com.ezpark.io.payment.domain.model.Amount;
 import com.ezpark.io.payment.domain.model.PaymentAuthorization;
 import com.ezpark.io.payment.domain.model.PaymentMethod;
 import com.ezpark.io.payment.domain.port.inbound.PaymentCommandService;
-import com.ezpark.io.payment.domain.port.outbound.PaymentAuthorizationRepository;
 import com.ezpark.io.payment.domain.port.outbound.EventPublisher;
+import com.ezpark.io.payment.domain.port.outbound.PaymentAuthorizationRepository;
 import com.ezpark.io.payment.domain.port.outbound.ReservationAntiCorruptionService;
-import com.ezpark.io.payment.domain.event.PaymentAuthorizedEvent;
-import com.ezpark.io.payment.domain.event.PaymentCapturedEvent;
-import com.ezpark.io.payment.domain.event.PaymentRefundedEvent;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
 
 @Service
 @Transactional
@@ -39,11 +37,17 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         // Get reservation details for billing
         // to be implemented later
        // var reservationView = reservationACL.getReservationForBilling(reservationId);
+
+        // convert VOs to primitives
+
         PaymentAuthorization auth = PaymentAuthorization.create(reservationId, amount, paymentMethod);
 
         paymentAuthorizationRepository.save(auth);
 
-        eventPublisher.publish(new PaymentAuthorizedEvent(auth.getId(), reservationId, amount.value()));
+        eventPublisher.publish(new PaymentAuthorizedEvent(
+                auth.getId().value(),
+                reservationId.value(),
+                amount.value()));
 
         return auth.getId();
     }
@@ -56,7 +60,10 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         auth.capture();
         paymentAuthorizationRepository.save(auth);
 
-        eventPublisher.publish(new PaymentCapturedEvent(paymentAuthId, auth.getReservationId(), auth.getAmount().value()));
+        eventPublisher.publish(new PaymentCapturedEvent(
+                paymentAuthId.value(),
+                auth.getReservationId().value(),
+                auth.getAmount().value()));
     }
 
     @Override
@@ -66,6 +73,8 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
 
         auth.expire();
         paymentAuthorizationRepository.save(auth);
+
+        // eventPublisher.publish(new PaymentExpiredEvent(...));
     }
 
     @Override
@@ -76,6 +85,10 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         auth.refund();
         paymentAuthorizationRepository.save(auth);
 
-        eventPublisher.publish(new PaymentRefundedEvent(paymentAuthId, auth.getReservationId(), auth.getAmount().value(), "Customer request"));
+        eventPublisher.publish(new PaymentRefundedEvent(
+                paymentAuthId,
+                auth.getReservationId().value(),
+                auth.getAmount().value(),
+                "Customer refunded"));
     }
 }
