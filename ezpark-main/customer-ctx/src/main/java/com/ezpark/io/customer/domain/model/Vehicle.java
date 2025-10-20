@@ -2,13 +2,12 @@ package com.ezpark.io.customer.domain.model;
 
 import jakarta.persistence.*;
 
-@Embeddable
+import java.util.Objects;
+
 public class Vehicle {
-    @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "license_plate"))
+
     private LicensePlate licensePlate;
 
-    @Enumerated(EnumType.STRING)
     private VehicleType type;
 
     protected Vehicle() {} // For JPA
@@ -20,4 +19,25 @@ public class Vehicle {
 
     public LicensePlate getLicensePlate() { return licensePlate; }
     public VehicleType getType() { return type; }
+
+    // Value Object equality (all fields)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vehicle vehicle)) return false;
+        return Objects.equals(licensePlate, vehicle.licensePlate) && type == vehicle.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(licensePlate, type);
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "licensePlate=" + licensePlate +
+                ", type=" + type +
+                '}';
+    }
 }
