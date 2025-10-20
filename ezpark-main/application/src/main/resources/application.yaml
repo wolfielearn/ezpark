@@ -4,7 +4,6 @@ spring:
     username: ${DB_USERNAME:ezpark_user}
     password: ${DB_PASSWORD:ezpark123}
     driver-class-name: org.postgresql.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,12 +12,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
           default_schema: public
-          create_namespaces: false
         format_sql: true
-        jdbc:
-          lob:
-            non_contextual_creation: true
-        default_schema: public
     show-sql: false
 
   kafka:
