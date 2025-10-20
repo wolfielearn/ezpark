@@ -1,52 +1,48 @@
-# ezPark -  Easy Parking System 🅿️
-
+# ezPark
 A comprehensive digital platform that eliminates urban parking challenges through real-time availability, intelligent reservations, and automated payments.µ
 
-🎯 Business Problem We're Solving
+-  Business Problem
 
 The Parking Pain Points
 
-      ⏰ Time Wastage: Drivers waste significant time searching for parking spots.
-      🚗 Inefficient Utilization: Parking lots suffer from poor space utilization.
-      💳 Manual Processes: Cash payments and manual ticketing cause delays
-      👻 No Real-time Visibility: Lack of live spot availability information
-      📅 Reservation Conflicts: Double-booking and scheduling issues
+      - Time Wastage: Drivers waste significant time searching for parking spots.
+      - Inefficient Utilization: Parking lots suffer from poor space utilization.
+      - Manual Processes: Cash payments and manual ticketing cause delays
+      - No Real-time Visibility: Lack of live spot availability information
+      - Reservation Conflicts: Double-booking and scheduling issues
       
-Our Solution
+The Solution
+  Business Requirements Implementation
 
-A digital ecosystem connecting drivers with parking spots in real-time, enabling seamless reservations, automated payments, and optimized space management.
-
-🏢 Business Requirements Implementation
-
-      1. Customer Management ✅
-      2. Parking Spot Management ✅
-      3. Reservation System ✅
-      4. Parking Sessions ✅
-      5. Payment Processing ✅
+      1. Customer Management 
+      2. Parking Spot Management 
+      3. Reservation System 
+      4. Parking Sessions 
+      5. Payment Processing 
 
 
 # Domain Driven Design
 
-## PHASE 1: STRATEGIC DDD  ✅
+## PHASE 1: STRATEGIC DDD  
 
 ### 1. BOUNDED CONTEXTS IDENTIFICATION
 
-    ✅ CUSTOMER MANAGEMENT - Responsibility: User accounts and vehicles
+     - CUSTOMER MANAGEMENT - Responsibility: User accounts and vehicles
       - Customer registration and profiles
       - Vehicle management (multiple vehicles per customer)
       - Authentication and authorization
          
-    ✅ PARKING MANAGEMENT - Responsibility: Physical parking infrastructure
+    - PARKING MANAGEMENT - Responsibility: Physical parking infrastructure
       - Parking lots and spots management
       - Real-time availability
       - Spot types and restrictions
       
-    ✅ RESERVATION & SESSIONS - Responsibility: Booking and actual parking
+    - RESERVATION & SESSIONS - Responsibility: Booking and actual parking
       - Reservation lifecycle
       - Time slot management
       - Session tracking (check-in/check-out)    
       
-    ✅ PAYMENT & PRICING - Responsibility: Money matters
+    - PAYMENT & PRICING - Responsibility: Money matters
       - Dynamic pricing strategies
       - Payment processing
       - Receipts
@@ -81,7 +77,7 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
       7.  Customer checks out → Parking session ends
       8.  System generates invoice → Processes payment
       9.  Payment processed → Spot released
-      🎮 Commands & events
+       Commands & events
             RegisterCustomer	--> CustomerRegistered
             RequestReservation-->	ReservationRequested
             CheckAvailability-->	AvailabilityConfirmed
@@ -93,7 +89,7 @@ A digital ecosystem connecting drivers with parking spots in real-time, enabling
             GenerateInvoice	System policy	InvoiceGenerated
             ProcessPayment	System policy	PaymentProcessed
             ReleaseSpot	System policy	SpotReleased
-      📋 Policies (Business Rules)
+       Policies (Business Rules)
             When [Event] happens, then [Action] should be taken:
             When Reservation Requested → Then Check Availability
             When Availability Confirmed → Then Authorize Payment
