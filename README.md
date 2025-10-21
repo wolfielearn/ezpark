@@ -1,5 +1,5 @@
 # ezPark
-A comprehensive digital platform that eliminates urban parking challenges through real-time availability, intelligent reservations, and automated payments.µ
+A small application that demonstrates my learning of DDD and hexagonal. the app manages a real-time availability, intelligent reservations, and automated payments.µ
 
 -  Business Problem
 
@@ -33,7 +33,7 @@ The Solution
       - Authentication and authorization
          
     - PARKING MANAGEMENT - Responsibility: Physical parking infrastructure
-      - Parking lots and spots management
+      - Spots management
       - Real-time availability
       - Spot types and restrictions
       
@@ -43,7 +43,7 @@ The Solution
       - Session tracking (check-in/check-out)    
       
     - PAYMENT & PRICING - Responsibility: Money matters
-      - Dynamic pricing strategies
+      - Dynamic pricing
       - Payment processing
       - Receipts
 
@@ -90,7 +90,6 @@ The Solution
             ProcessPayment	System policy	PaymentProcessed
             ReleaseSpot	System policy	SpotReleased
        Policies (Business Rules)
-            When [Event] happens, then [Action] should be taken:
             When Reservation Requested → Then Check Availability
             When Availability Confirmed → Then Authorize Payment
             When Payment Authorized → Then Reserve Spot
