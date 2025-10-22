@@ -5,8 +5,10 @@ import com.ezpark.io.customer.domain.model.Customer;
 import com.ezpark.io.customer.domain.model.Email;
 import com.ezpark.io.shared.kernel.CustomerId;
 
+import java.util.Optional;
+
 public interface CustomerRepository {
     Customer save(Customer customer);
-    Customer findById(CustomerId customerId);
+    Optional<Customer> findById(CustomerId customerId);
     boolean existsByEmail(Email email);
 }

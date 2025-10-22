@@ -33,10 +33,16 @@ public class JpaCustomerRepositoryAdapter implements CustomerRepository {
 
     // Implements all domain repository methods using JPA
     @Override
-    public Customer findById(CustomerId customerId) {
+    public Optional<Customer> findById(CustomerId customerId) {
         UUID id = customerId.value();
-        Optional<JpaCustomerEntity> entity = jpaRepository.findById(id);
-        return  mapper.toModel(entity.get());
+        Optional<JpaCustomerEntity> jpaEntityOpt = jpaRepository.findById(id);
+        if(jpaEntityOpt.isPresent()){
+
+            JpaCustomerEntity jpaEntity = jpaEntityOpt.get();
+
+            return Optional.ofNullable(mapper.toModel(jpaEntity));
+        }
+         return Optional.empty();
     }
 
     @Override

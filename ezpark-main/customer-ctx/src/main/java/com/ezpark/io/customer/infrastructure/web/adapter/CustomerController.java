@@ -33,8 +33,8 @@ public class CustomerController {
     public String save(@RequestBody CustomerRequest request){
 
         Email verifyEmail =new Email(request.email());
-        UUID id = customerCommandService.registerCustomer(request.name(), verifyEmail);
-        return "SUCCESS  id = " + id;
+        CustomerId id = customerCommandService.registerCustomer(request.name(), verifyEmail);
+        return "SUCCESS  id = " + id.value();
     }
     @GetMapping("/customers/{id}")
     public CustomerDto get(@PathVariable("id") String uuid){

@@ -4,17 +4,16 @@ import com.ezpark.io.reservation.domain.port.outbound.CustomerAntiCorruptionServ
 import com.ezpark.io.reservation.domain.port.outbound.model.ReservationCustomerView;
 import com.ezpark.io.shared.kernel.CustomerId;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.UUID;
 
 @Service
 public class MockRestCustomerAntiCorruptionService implements CustomerAntiCorruptionService{
 
-    private final RestTemplate restTemplate;
+    //private final RestTemplate restTemplate;
 
-    public MockRestCustomerAntiCorruptionService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public MockRestCustomerAntiCorruptionService(){//RestTemplate restTemplate) {
+      //  this.restTemplate = restTemplate;
     }
     @Override
     public ReservationCustomerView getCustomerForReservation(UUID customerUuid) {

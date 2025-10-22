@@ -1,7 +1,7 @@
 package com.ezpark.io.customer.domain.model;
 
 
-import com.ezpark.io.customer.domain.event.CustomerRegisteredEvent;
+import com.ezpark.io.shared.event.CustomerRegisteredEvent;
 import com.ezpark.io.shared.event.DomainEvent;
 import com.ezpark.io.shared.kernel.CustomerId;
 
