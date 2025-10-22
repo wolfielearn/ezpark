@@ -1,13 +1,13 @@
 package com.ezpark.io.reservation.application.service;
 
 
-import com.ezpark.io.reservation.domain.event.*;
 import com.ezpark.io.reservation.domain.model.Reservation;
 import com.ezpark.io.reservation.domain.model.TimeSlot;
 import com.ezpark.io.reservation.domain.port.outbound.CustomerAntiCorruptionService;
 import com.ezpark.io.reservation.domain.port.outbound.EventPublisher;
 import com.ezpark.io.reservation.domain.port.outbound.ParkingSpotAntiCorruptionService;
 import com.ezpark.io.reservation.domain.port.outbound.ReservationRepository;
+import com.ezpark.io.shared.event.*;
 import com.ezpark.io.shared.kernel.CustomerId;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;

@@ -1,7 +1,6 @@
-package com.ezpark.io.payment.domain.event;
+package com.ezpark.io.shared.event;
 
 
-import com.ezpark.io.shared.event.DomainEvent;
 import com.ezpark.io.shared.kernel.ReservationId;
 import java.math.BigDecimal;
 

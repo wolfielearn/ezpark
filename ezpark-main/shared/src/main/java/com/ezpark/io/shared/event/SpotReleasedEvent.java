@@ -1,7 +1,6 @@
-package com.ezpark.io.parking.domain.event;
+package com.ezpark.io.shared.event;
 
 
-import com.ezpark.io.shared.event.DomainEvent;
 import com.ezpark.io.shared.kernel.SpotId;
 
 public class SpotReleasedEvent extends DomainEvent {

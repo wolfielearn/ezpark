@@ -1,10 +1,5 @@
-package com.ezpark.io.reservation.domain.event;
+package com.ezpark.io.shared.event;
 
-
-import com.ezpark.io.shared.event.DomainEvent;
-import com.ezpark.io.shared.kernel.CustomerId;
-import com.ezpark.io.shared.kernel.SpotId;
-import org.apache.kafka.common.protocol.types.Field;
 
 import java.time.Instant;
 import java.util.UUID;

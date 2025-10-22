@@ -1,8 +1,5 @@
-package com.ezpark.io.customer.domain.event;
+package com.ezpark.io.shared.event;
 
-
-import com.ezpark.io.shared.event.DomainEvent;
-import com.ezpark.io.shared.kernel.CustomerId;
 
 import java.util.UUID;
 
