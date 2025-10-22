@@ -56,7 +56,7 @@ The Solution
       Reservation Context: 
             - Reservation, TimeSlot, ParkingSession, CheckIn, CheckOut
       Payment Context: 
-            - PricingStrategy, Invoice, Payment, Receipt
+            - Pricing, Invoice, Payment, Receipt
             
 ### 3. CONTEXT MAPPING & INTEGRATION
 
