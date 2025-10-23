@@ -23,10 +23,9 @@ public class JpaEntityModelMapper {
                     return  new Vehicle(license, VehicleType.valueOf(v.getType()));
                 }).toList();
 
-        Customer model = Customer.reconstruct(id,email, entityCustomer.getName(), vehicles);
         // Convert domain vehicles to JPA vehicles (simple data transfer)
-        vehicles.forEach(model::addVehicle);
-        return model;
+
+        return Customer.reconstruct(id,email, entityCustomer.getName(), vehicles);
     }
 
     public JpaCustomerEntity toEntity(Customer customer) {

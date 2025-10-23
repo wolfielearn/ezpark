@@ -4,44 +4,31 @@ import com.ezpark.io.shared.kernel.CustomerId;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "reservation", schema = "reservation")
-@AttributeOverrides({
-        @AttributeOverride(name = "id.value", column = @Column(name = "reservation_id")),
-        @AttributeOverride(name = "customerId.value", column = @Column(name = "customer_id")),
-        @AttributeOverride(name = "spotId.value", column = @Column(name = "spot_id")),
-        @AttributeOverride(name = "paymentAuthId.value", column = @Column(name = "payment_auth_id"))
-})
+
 public class Reservation {
-    @EmbeddedId
     private ReservationId id;
-    @Embedded
     private CustomerId customerId;
-    @Embedded
     private SpotId spotId;
-    @Embedded
     private TimeSlot timeSlot;
-    @Enumerated(EnumType.STRING)
     private ReservationStatus status;
-    @Embedded
     private PaymentAuthorizationId paymentAuthId;
 
     protected Reservation() {} // For JPA
 
-    private Reservation(ReservationId id, CustomerId customerId, SpotId spotId, TimeSlot timeSlot) {
+    private Reservation(ReservationId id, CustomerId customerId, SpotId spotId, TimeSlot timeSlot, PaymentAuthorizationId paymentAuthId) {
         this.id = id;
         this.customerId = customerId;
         this.spotId = spotId;
         this.timeSlot = timeSlot;
         this.status = ReservationStatus.PENDING;
+        this.paymentAuthId = paymentAuthId;
     }
 
     // Factory method
     public static Reservation create(CustomerId customerId, SpotId  spotId, TimeSlot timeSlot) {
         ReservationId id = ReservationId.newId();
-        return new Reservation(id, customerId, spotId, timeSlot);
+        return new Reservation(id, customerId, spotId, timeSlot, null);
     }
 
 
