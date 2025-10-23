@@ -11,7 +11,7 @@ public class JpaVehicleVO {
     private String licensePlate;
 
     @Column(name = "vehicle_type", nullable = false, length = 20)
-    private String type;  // ✅ Store as String, no @Enumerated
+    private String type;
 
     protected JpaVehicleVO() {}
 
