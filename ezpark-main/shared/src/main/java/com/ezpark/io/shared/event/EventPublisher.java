@@ -1,7 +1,5 @@
-package com.ezpark.io.customer.domain.port.outbound;
+package com.ezpark.io.shared.event;
 
-
-import com.ezpark.io.shared.event.DomainEvent;
 
 public interface EventPublisher {
     void publish(DomainEvent event);
