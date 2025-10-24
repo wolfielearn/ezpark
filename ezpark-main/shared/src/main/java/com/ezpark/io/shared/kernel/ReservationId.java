@@ -19,4 +19,8 @@ public record ReservationId(UUID value) {
     public static ReservationId newId() {
         return new ReservationId(UUID.randomUUID());
     }
+
+    public static ReservationId from(UUID value){
+        return new ReservationId(value);
+    }
 }
