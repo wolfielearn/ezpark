@@ -1,16 +1,13 @@
 package com.ezpark.io.payment.application.service;
 
 
-import com.ezpark.io.payment.domain.event.PaymentAuthorizedEvent;
-import com.ezpark.io.payment.domain.event.PaymentCapturedEvent;
-import com.ezpark.io.payment.domain.event.PaymentRefundedEvent;
 import com.ezpark.io.payment.domain.model.Amount;
 import com.ezpark.io.payment.domain.model.PaymentAuthorization;
 import com.ezpark.io.payment.domain.model.PaymentMethod;
 import com.ezpark.io.payment.domain.port.inbound.PaymentCommandService;
-import com.ezpark.io.payment.domain.port.outbound.EventPublisher;
 import com.ezpark.io.payment.domain.port.outbound.PaymentAuthorizationRepository;
 import com.ezpark.io.payment.domain.port.outbound.ReservationAntiCorruptionService;
+import com.ezpark.io.shared.event.EventPublisher;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import org.springframework.stereotype.Service;
@@ -44,10 +41,10 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
 
         paymentAuthorizationRepository.save(auth);
 
-        eventPublisher.publish(new PaymentAuthorizedEvent(
-                auth.getId().value(),
-                reservationId.value(),
-                amount.value()));
+//        eventPublisher.publish(new PaymentAuthorizedEvent(
+//                auth.getId().value(),
+//                reservationId.value(),
+//                amount.value()));
 
         return auth.getId();
     }
@@ -60,10 +57,10 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         auth.capture();
         paymentAuthorizationRepository.save(auth);
 
-        eventPublisher.publish(new PaymentCapturedEvent(
-                paymentAuthId.value(),
-                auth.getReservationId().value(),
-                auth.getAmount().value()));
+//        eventPublisher.publish(new PaymentCapturedEvent(
+//                paymentAuthId.value(),
+//                auth.getReservationId().value(),
+//                auth.getAmount().value()));
     }
 
     @Override
@@ -85,10 +82,10 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         auth.refund();
         paymentAuthorizationRepository.save(auth);
 
-        eventPublisher.publish(new PaymentRefundedEvent(
-                paymentAuthId,
-                auth.getReservationId().value(),
-                auth.getAmount().value(),
-                "Customer refunded"));
+//        eventPublisher.publish(new PaymentRefundedEvent(
+//                paymentAuthId,
+//                auth.getReservationId().value(),
+//                auth.getAmount().value(),
+//                "Customer refunded"));
     }
 }

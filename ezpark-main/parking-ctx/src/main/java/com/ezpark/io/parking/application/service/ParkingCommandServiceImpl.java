@@ -1,11 +1,10 @@
 package com.ezpark.io.parking.application.service;
 
 
-import com.ezpark.io.parking.domain.event.*;
 import com.ezpark.io.parking.domain.model.ParkingSpot;
 import com.ezpark.io.parking.domain.port.inbound.ParkingCommandService;
-import com.ezpark.io.parking.domain.port.outbound.EventPublisher;
 import com.ezpark.io.parking.domain.port.outbound.ParkingSpotRepository;
+import com.ezpark.io.shared.event.*;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
         spot.reserve(reservationId);
         parkingSpotRepository.save(spot);
 
-        eventPublisher.publish(new SpotReservedEvent(spotId, reservationId));
+//        eventPublisher.publish(new SpotReservedEvent(spotId, reservationId));
     }
 
     @Override
@@ -43,7 +42,7 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
         spot.checkIn();
         parkingSpotRepository.save(spot);
 
-        eventPublisher.publish(new CheckInCompletedEvent(spotId, spot.getCurrentReservationId(), java.time.Instant.now()));
+//        eventPublisher.publish(new CheckInCompletedEvent(spotId, spot.getCurrentReservationId(), java.time.Instant.now()));
     }
 
     @Override
@@ -57,12 +56,12 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
         spot.checkOut();
         parkingSpotRepository.save(spot);
 
-        eventPublisher.publish(new CheckOutCompletedEvent(
-                spot.getCurrentReservationId(),
-                spotId,
-                actualDuration,
-                java.time.Instant.now()
-        ));
+//        eventPublisher.publish(new CheckOutCompletedEvent(
+//                spot.getCurrentReservationId(),
+//                spotId,
+//                actualDuration,
+//                java.time.Instant.now()
+//        ));
     }
 
     @Override
@@ -73,7 +72,7 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
         spot.markForMaintenance();
         parkingSpotRepository.save(spot);
 
-        eventPublisher.publish(new SpotMaintenanceEvent(spotId, true));
+      //  eventPublisher.publish(new SpotMaintenanceEvent(spotId, true));
     }
 
     @Override
@@ -84,6 +83,6 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
         spot.makeAvailable();
         parkingSpotRepository.save(spot);
 
-        eventPublisher.publish(new SpotReleasedEvent(spotId));
+       // eventPublisher.publish(new SpotReleasedEvent(spotId));
     }
 }
