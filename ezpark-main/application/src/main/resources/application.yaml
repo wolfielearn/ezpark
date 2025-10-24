@@ -1,4 +1,12 @@
+
+server:
+  port: ${SERVER_PORT:8080}
+
+
 spring:
+  application:
+    name: reservation-ctx
+
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:ezpark_db}
     username: ${DB_USERNAME:ezpark_user}
@@ -20,8 +28,29 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 
-server:
-  port: ${SERVER_PORT:8080}
+    producer:
+      value-serializer: "org.springframework.kafka.support.serializer.JsonSerializer"
+      properties:
+        "[spring.json.add.type.headers]": false
+
+    consumer:
+      value-deserializer: "org.springframework.kafka.support.serializer.JsonDeserializer"
+      properties:
+        "[spring.json.value.default.type]": "com.ezpark.io.Invoice"
+        "[spring.json.trusted.packages]": "com.ezpark.io"
+      group-id: reservation-ctx-group
+      auto-offset-reset: earliest
+  listener:
+    type: single
+
+kafka:
+  topics:
+    reservation-ctx: "reservation.ctx"
+    payment-ctx: "payment.ctx"
+###################
+
+
+
 
 logging:
   level:
