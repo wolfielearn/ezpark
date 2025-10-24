@@ -45,8 +45,8 @@ spring:
 
 kafka:
   topics:
-    reservation-ctx: "reservation.ctx"
-    payment-ctx: "payment.ctx"
+    reservation: "reservation-ctx"
+    payment: "payment-ctx"
 ###################
 
 
