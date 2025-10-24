@@ -34,7 +34,7 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
         Customer customer = Customer.create(name, email);
         CustomerId savedCustomerId = customerRepository.save(customer).getId();
 
-       eventPublisher.publish(new CustomerRegisteredEvent(savedCustomerId.value(),email.value(),name));
+//       eventPublisher.publish(new CustomerRegisteredEvent(savedCustomerId.value(),email.value(),name));
         return savedCustomerId;
 
     }

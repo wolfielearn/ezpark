@@ -4,7 +4,6 @@ package com.ezpark.io.reservation.application.service;
 import com.ezpark.io.reservation.domain.model.Reservation;
 import com.ezpark.io.reservation.domain.model.TimeSlot;
 import com.ezpark.io.reservation.domain.port.outbound.CustomerAntiCorruptionService;
-import com.ezpark.io.reservation.domain.port.outbound.EventPublisher;
 import com.ezpark.io.reservation.domain.port.outbound.ParkingSpotAntiCorruptionService;
 import com.ezpark.io.reservation.domain.port.outbound.ReservationRepository;
 import com.ezpark.io.shared.event.*;
@@ -15,6 +14,7 @@ import com.ezpark.io.shared.kernel.SpotId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Service
@@ -37,10 +37,10 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
     }
 
     @Override
-    public ReservationId createReservation(CustomerId customerUuid, SpotId spotId, TimeSlot timeSlot) {
+    public ReservationId createReservation(CustomerId customerId, SpotId spotId, TimeSlot timeSlot) {
 
-        // 1. Validate customer can make reservations
-        var customerView = customerACL.getCustomerForReservation(customerUuid.value());
+       // 1. Validate customer can make reservations
+        var customerView = customerACL.getCustomerForReservation(customerId);
         if (!customerView.hasVehicles()) {
             throw new IllegalArgumentException("Customer must have vehicles to make reservations");
         }
@@ -49,20 +49,24 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         // 2. Check spot availability
         boolean isAvailable = parkingACL.checkAvailability(spotId.value(), startTime, endTime);
         if (!isAvailable) {
-            eventPublisher.publish(new ReservationFailedEvent(
-                    ReservationId.newId(), spotId, customerUuid, "Spot not available"
-            ));
+//            eventPublisher.publish(new ReservationFailedEvent(
+//                    ReservationId.newId(), spotId, customerId, "Spot not available"
+//            ));
             throw new IllegalArgumentException("Spot not available for requested time");
         }
 
         // 3. Create reservation
 
-        Reservation reservation = Reservation.create(customerUuid, spotId, timeSlot);
-        reservationRepository.save(reservation);
+        Reservation reservation = Reservation.create(customerId, spotId, timeSlot);
+        Reservation savedReservation = reservationRepository.save(reservation);
 
         // 4. Request payment authorization
-        eventPublisher.publish(new ReservationRequestedEvent(
-                customerUuid.value(), spotId.value(), startTime, endTime
+        eventPublisher.publish(new PaymentAuthorizationRequestedEvent(
+                savedReservation.getId().value().toString(),
+                customerId.value().toString(),
+                spotId.value(),
+                BigDecimal.valueOf(5),
+                startTime, endTime
         ));
 
         return reservation.getId();
@@ -78,10 +82,10 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
 
         // Reserve the physical spot
         parkingACL.reserveSpot(reservation.getSpotId().value(), reservationId.value());
-
-        eventPublisher.publish(new ReservationConfirmedEvent(
-                reservationId.value(), paymentAuthId.value(), reservation.getSpotId().value(), reservation.getCustomerId().value()
-        ));
+//
+//        eventPublisher.publish(new ReservationConfirmedEvent(
+//                reservationId.value(), paymentAuthId.value(), reservation.getSpotId().value(), reservation.getCustomerId().value()
+//        ));
     }
 
     @Override
@@ -92,11 +96,11 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         reservation.cancel();
         reservationRepository.save(reservation);
 
-        eventPublisher.publish(new ReservationCancelledEvent(
-                reservationId.value(),
-                reservation.getCustomerId().value(),
-                "Customer cancelled"
-        ));
+//        eventPublisher.publish(new ReservationCancelledEvent(
+//                reservationId.value(),
+//                reservation.getCustomerId().value(),
+//                "Customer cancelled"
+//        ));
     }
 
     @Override
@@ -116,6 +120,6 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         reservation.markAsCompleted();
         reservationRepository.save(reservation);
 
-        eventPublisher.publish(new ReservationCompletedEvent(reservationId.value()));
+//        eventPublisher.publish(new ReservationCompletedEvent(reservationId.value()));
     }
 }
