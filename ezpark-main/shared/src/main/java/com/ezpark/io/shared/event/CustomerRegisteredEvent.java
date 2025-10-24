@@ -4,9 +4,12 @@ package com.ezpark.io.shared.event;
 import java.util.UUID;
 
 public class CustomerRegisteredEvent extends DomainEvent {
-    private final UUID customerId;
-    private final String email;
-    private final String name;
+    private UUID customerId;
+    private String email;
+    private String name;
+
+    public CustomerRegisteredEvent() {
+    }
 
     public CustomerRegisteredEvent(UUID customerId, String email, String name) {
         this.customerId = customerId;

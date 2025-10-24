@@ -7,10 +7,13 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class CheckOutCompletedEvent extends DomainEvent {
-    private final ReservationId reservationId;
-    private final SpotId spotId;
-    private final Duration actualDuration;
-    private final Instant checkOutTime;
+    private ReservationId reservationId;
+    private SpotId spotId;
+    private Duration actualDuration;
+    private Instant checkOutTime;
+
+    public CheckOutCompletedEvent() {
+    }
 
     public CheckOutCompletedEvent(ReservationId reservationId, SpotId spotId, Duration actualDuration, Instant checkOutTime) {
         this.reservationId = reservationId;

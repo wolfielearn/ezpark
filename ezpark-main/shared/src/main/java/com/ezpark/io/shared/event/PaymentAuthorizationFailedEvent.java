@@ -5,9 +5,12 @@ import com.ezpark.io.shared.kernel.ReservationId;
 import java.math.BigDecimal;
 
 public class PaymentAuthorizationFailedEvent extends DomainEvent {
-    private final ReservationId reservationId;
-    private final BigDecimal attemptedAmount;
-    private final String failureReason;
+    private  ReservationId reservationId;
+    private  BigDecimal attemptedAmount;
+    private  String failureReason;
+
+    public PaymentAuthorizationFailedEvent() {
+    }
 
     public PaymentAuthorizationFailedEvent(ReservationId reservationId,
                                            BigDecimal attemptedAmount, String failureReason) {

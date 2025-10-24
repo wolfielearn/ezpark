@@ -7,10 +7,13 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class PaymentRefundedEvent extends DomainEvent {
-    private final PaymentAuthorizationId paymentAuthId;
-    private final UUID reservationId;
-    private final BigDecimal refundedAmount;
-    private final String refundReason;
+    private PaymentAuthorizationId paymentAuthId;
+    private UUID reservationId;
+    private BigDecimal refundedAmount;
+    private String refundReason;
+
+    public PaymentRefundedEvent() {
+    }
 
     public PaymentRefundedEvent(PaymentAuthorizationId paymentAuthId, UUID reservationId,
                                 BigDecimal refundedAmount, String refundReason) {

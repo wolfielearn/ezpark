@@ -4,11 +4,11 @@ package com.ezpark.io.shared.event;
 import java.util.UUID;
 
 public class ReservationConfirmedEvent extends DomainEvent {
-    private final UUID reservationId;
-    private final UUID paymentAuthId;
-    private final String spotId;
-    private final UUID customerId;
-
+    private UUID reservationId;
+    private UUID paymentAuthId;
+    private String spotId;
+    private UUID customerId;
+    public ReservationConfirmedEvent(){}
     public ReservationConfirmedEvent(UUID reservationId, UUID paymentAuthId,
                                      String spotId, UUID customerId) {
         this.reservationId = reservationId;

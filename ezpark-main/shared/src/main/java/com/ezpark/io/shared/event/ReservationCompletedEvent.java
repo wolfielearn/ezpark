@@ -4,8 +4,9 @@ package com.ezpark.io.shared.event;
 import java.util.UUID;
 
 public class ReservationCompletedEvent extends DomainEvent {
-    private final UUID reservationId;
-
+    private UUID reservationId;
+    public ReservationCompletedEvent() {
+    }
     public ReservationCompletedEvent(UUID reservationId) {
         this.reservationId = reservationId;
     }

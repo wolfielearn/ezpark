@@ -5,8 +5,11 @@ import com.ezpark.io.shared.kernel.SpotId;
 import com.ezpark.io.shared.kernel.ReservationId;
 
 public class SpotReservedEvent extends DomainEvent {
-    private final SpotId spotId;
-    private final ReservationId reservationId;
+    private SpotId spotId;
+    private ReservationId reservationId;
+
+    public SpotReservedEvent() {
+    }
 
     public SpotReservedEvent(SpotId spotId, ReservationId reservationId) {
         this.spotId = spotId;

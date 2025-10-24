@@ -4,7 +4,10 @@ package com.ezpark.io.shared.event;
 import com.ezpark.io.shared.kernel.SpotId;
 
 public class SpotReleasedEvent extends DomainEvent {
-    private final SpotId spotId;
+    private SpotId spotId;
+
+    public SpotReleasedEvent() {
+    }
 
     public SpotReleasedEvent(SpotId spotId) {
         this.spotId = spotId;

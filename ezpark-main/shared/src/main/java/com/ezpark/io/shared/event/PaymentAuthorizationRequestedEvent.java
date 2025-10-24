@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 public class PaymentAuthorizationRequestedEvent extends DomainEvent {
-    private final String reservationId;
-    private final String customerId;
-    private final String spotId;
-    private final BigDecimal amount;
-    private final Instant startTime;
-    private final Instant endTime;
-
+    private String reservationId;
+    private String customerId;
+    private String spotId;
+    private BigDecimal amount;
+    private Instant startTime;
+    private Instant endTime;
+    public PaymentAuthorizationRequestedEvent(){}
     public PaymentAuthorizationRequestedEvent(String reservationId, String customerId, String spotId,
                                               BigDecimal amount, Instant startTime, Instant endTime) {
         this.reservationId = reservationId;

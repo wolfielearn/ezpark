@@ -5,9 +5,12 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class PaymentAuthorizedEvent extends DomainEvent {
-    private final UUID paymentAuthId;
-    private final UUID reservationId;
-    private final BigDecimal authorizedAmount;
+    private UUID paymentAuthId;
+    private UUID reservationId;
+    private BigDecimal authorizedAmount;
+
+    public PaymentAuthorizedEvent() {
+    }
 
     public PaymentAuthorizedEvent(UUID paymentAuthId, UUID reservationId, BigDecimal authorizedAmount) {
         this.paymentAuthId = paymentAuthId;
