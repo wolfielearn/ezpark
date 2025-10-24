@@ -1,7 +1,6 @@
 -- Initialize EZPark Database Schemas
 -- This runs automatically when PostgreSQL starts
 
--- creation of schema is delegated to resources/schema.sql
 -- Create schemas for each bounded context
 CREATE SCHEMA IF NOT EXISTS customer;
 CREATE SCHEMA IF NOT EXISTS reservation;
