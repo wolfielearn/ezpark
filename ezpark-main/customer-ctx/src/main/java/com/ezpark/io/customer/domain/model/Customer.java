@@ -47,7 +47,7 @@ public class Customer {
     }
 
     // Domain method
-    public void addVehicle(LicensePlate licensePlate, VehicleType type) {
+    public Vehicle addVehicle(LicensePlate licensePlate, VehicleType type) {
 
         // Business invariant: Prevent duplicate vehicles
         if (vehicles.stream().anyMatch(v -> v.getLicensePlate().equals(licensePlate))) {
@@ -55,27 +55,20 @@ public class Customer {
         }
         Vehicle vehicle = new Vehicle(licensePlate, type);
         this.vehicles.add(vehicle);
+        return vehicle;
 
-            /*this.domainEvents.add(new VehicleAddedEvent(
-                    id.getValue(),              // UUID primitive
-                    licensePlate.getValue(),    // String primitive
-                    type.name()                 // String primitive
-            ));*/
      }
     public void addVehicle(Vehicle vehicle) {
-        // Business invariant: Prevent duplicate vehicles
         if (vehicles.stream().anyMatch(v -> v.getLicensePlate().equals(vehicle.getLicensePlate()))) {
             throw new IllegalArgumentException("Vehicle with license plate " + vehicle.getLicensePlate() + " already exists");
         }
         this.vehicles.add(vehicle);
     }
 
-    // Business rule
     public boolean canMakeReservations() {
         return !vehicles.isEmpty();
     }
 
-    // Validation --> could be a VO
 
     private String validateName(String name) {
         if (name == null || name.trim().isEmpty()) {

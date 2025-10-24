@@ -1,15 +1,12 @@
 package com.ezpark.io.customer.application.service;
 
 
-import com.ezpark.io.customer.domain.model.Customer;
-import com.ezpark.io.customer.domain.model.Email;
-import com.ezpark.io.customer.domain.model.LicensePlate;
-import com.ezpark.io.customer.domain.model.VehicleType;
+import com.ezpark.io.customer.domain.model.*;
 import com.ezpark.io.customer.domain.port.inbound.CustomerCommandService;
 import com.ezpark.io.customer.domain.port.outbound.CustomerRepository;
-import com.ezpark.io.customer.domain.port.outbound.EventPublisher;
 import com.ezpark.io.customer.domain.port.outbound.NotificationService;
 import com.ezpark.io.shared.event.CustomerRegisteredEvent;
+import com.ezpark.io.shared.event.EventPublisher;
 import com.ezpark.io.shared.kernel.CustomerId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,13 +40,13 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
     }
 
     @Override
-    public void addVehicle(CustomerId customerId, LicensePlate licensePlate, VehicleType vehicleType) {
+    public Vehicle addVehicle(CustomerId customerId, LicensePlate licensePlate, VehicleType vehicleType) {
         Customer customer = customerRepository.findById(customerId)
                         .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
 
-        customer.addVehicle(licensePlate, vehicleType);
-
+        Vehicle vehicle = customer.addVehicle(licensePlate, vehicleType);
         customerRepository.save(customer);
+        return vehicle;
     }
 
     @Override
@@ -58,6 +55,4 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
         return customer.canMakeReservations();
     }
-
-
 }
