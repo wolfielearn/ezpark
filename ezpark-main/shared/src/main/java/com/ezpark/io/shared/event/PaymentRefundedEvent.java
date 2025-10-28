@@ -21,6 +21,7 @@ public class PaymentRefundedEvent extends DomainEvent {
         this.reservationId = reservationId;
         this.refundedAmount = refundedAmount;
         this.refundReason = refundReason;
+        setEventType("PaymentRefundedEvent");
     }
 
     public PaymentAuthorizationId getPaymentAuthId() { return paymentAuthId; }

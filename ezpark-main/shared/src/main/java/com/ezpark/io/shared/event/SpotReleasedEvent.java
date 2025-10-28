@@ -11,6 +11,7 @@ public class SpotReleasedEvent extends DomainEvent {
 
     public SpotReleasedEvent(SpotId spotId) {
         this.spotId = spotId;
+        setEventType("SpotReleasedEvent");
     }
 
     public SpotId getSpotId() { return spotId; }

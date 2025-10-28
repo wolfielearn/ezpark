@@ -20,6 +20,7 @@ public class ReservationRequestedEvent extends DomainEvent {
         this.spotId = spotId;
         this.startTime = startTime;
         this.endTime = endTime;
+        setEventType("ReservationRequestedEvent");
     }
 
     public UUID getCustomerId() { return customerId; }

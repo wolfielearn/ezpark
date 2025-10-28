@@ -17,6 +17,7 @@ public class PaymentAuthorizationFailedEvent extends DomainEvent {
         this.reservationId = reservationId;
         this.attemptedAmount = attemptedAmount;
         this.failureReason = failureReason;
+        setEventType("PaymentAuthorizationFailedEvent");
     }
 
     public ReservationId getReservationId() { return reservationId; }

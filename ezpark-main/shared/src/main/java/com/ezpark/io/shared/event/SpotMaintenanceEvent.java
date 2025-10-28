@@ -13,6 +13,7 @@ public class SpotMaintenanceEvent extends DomainEvent {
     public SpotMaintenanceEvent(SpotId spotId, boolean underMaintenance) {
         this.spotId = spotId;
         this.underMaintenance = underMaintenance;
+        setEventType("SpotMaintenanceEvent");
     }
 
     public SpotId getSpotId() { return spotId; }

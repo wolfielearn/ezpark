@@ -17,6 +17,7 @@ public class CheckInCompletedEvent extends DomainEvent {
         this.spotId = spotId;
         this.reservationId = reservationId;
         this.checkInTime = checkInTime;
+        this.setEventType("CheckInCompletedEvent");
     }
 
     public SpotId getSpotId() { return spotId; }

@@ -19,6 +19,7 @@ public class PaymentAuthorizationRequestedEvent extends DomainEvent {
         this.amount = amount;
         this.startTime = startTime;
         this.endTime = endTime;
+        setEventType("PaymentAuthorizationRequestedEvent");
     }
 
     public String getReservationId() {return reservationId;    }

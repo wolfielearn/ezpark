@@ -14,6 +14,7 @@ public class SpotReservedEvent extends DomainEvent {
     public SpotReservedEvent(SpotId spotId, ReservationId reservationId) {
         this.spotId = spotId;
         this.reservationId = reservationId;
+        setEventType("SpotReservedEvent");
     }
 
     public SpotId getSpotId() { return spotId; }

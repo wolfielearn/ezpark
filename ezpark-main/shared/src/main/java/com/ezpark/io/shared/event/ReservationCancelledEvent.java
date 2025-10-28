@@ -15,6 +15,7 @@ public class ReservationCancelledEvent extends DomainEvent {
         this.reservationId = reservationId;
         this.customerId = customerId;
         this.reason = reason;
+        setEventType("ReservationCancelledEvent");
     }
 
     public UUID getReservationId() { return reservationId; }

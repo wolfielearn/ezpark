@@ -16,6 +16,7 @@ import java.util.UUID;
             this.paymentAuthId = paymentAuthId;
             this.reservationId = reservationId;
             this.capturedAmount = capturedAmount;
+            setEventType("PaymentCapturedEvent");
         }
 
         public UUID getPaymentAuthId() { return paymentAuthId; }

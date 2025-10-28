@@ -8,6 +8,7 @@ public class ReservationConfirmedEvent extends DomainEvent {
     private UUID paymentAuthId;
     private String spotId;
     private UUID customerId;
+
     public ReservationConfirmedEvent(){}
     public ReservationConfirmedEvent(UUID reservationId, UUID paymentAuthId,
                                      String spotId, UUID customerId) {
@@ -15,6 +16,7 @@ public class ReservationConfirmedEvent extends DomainEvent {
         this.paymentAuthId = paymentAuthId;
         this.spotId = spotId;
         this.customerId = customerId;
+        setEventType("ReservationConfirmedEvent");
     }
 
     public UUID getReservationId() { return reservationId; }

@@ -20,6 +20,7 @@ public class CheckOutCompletedEvent extends DomainEvent {
         this.spotId = spotId;
         this.actualDuration = actualDuration;
         this.checkOutTime = checkOutTime;
+        this.setEventType("CheckOutCompletedEvent");
     }
 
     public ReservationId getReservationId() { return reservationId; }

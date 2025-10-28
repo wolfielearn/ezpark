@@ -20,6 +20,7 @@ public class ReservationFailedEvent extends DomainEvent {
         this.spotId = spotId;
         this.customerId = customerId;
         this.failureReason = failureReason;
+        setEventType("ReservationFailedEvent");
     }
 
     public ReservationId getReservationId() { return reservationId; }
