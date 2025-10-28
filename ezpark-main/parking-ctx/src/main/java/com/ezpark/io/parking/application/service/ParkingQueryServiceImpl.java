@@ -29,7 +29,7 @@ public class ParkingQueryServiceImpl implements ParkingQueryService {
 
     @Override
     public List<ParkingSpot> findAllAvailableSpots() {
-        return parkingSpotRepository.findByStatus(SpotStatus.AVAILABLE);
+        return null ; // parkingSpotRepository.findByStatus(SpotStatus.AVAILABLE);
     }
 
     @Override

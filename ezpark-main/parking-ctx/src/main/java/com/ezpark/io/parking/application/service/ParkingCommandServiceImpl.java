@@ -31,7 +31,7 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
         spot.reserve(reservationId);
         parkingSpotRepository.save(spot);
 
-//        eventPublisher.publish(new SpotReservedEvent(spotId, reservationId));
+        eventPublisher.publish(new SpotReservedEvent(spotId, reservationId));
     }
 
     @Override

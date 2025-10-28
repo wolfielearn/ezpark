@@ -2,32 +2,17 @@ package com.ezpark.io.parking.domain.model;
 
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "parking", schema = "parking")
-@AttributeOverrides({
-        @AttributeOverride(name = "id.value", column = @Column(name = "Spot_id")),
-        @AttributeOverride(name = "currentReservationId.value", column = @Column(name = "current_reservation_id"))
-})
+
 public class ParkingSpot {
 
-    @EmbeddedId
     private SpotId id;
-
-    @Embedded
     private Location location;
-
-    @Enumerated(EnumType.STRING)
     private SpotType type;
-
-    @Enumerated(EnumType.STRING)
     private SpotStatus status;
-
-    @Embedded
     private ReservationId currentReservationId;
 
-    protected ParkingSpot() {} // For JPA
+    protected ParkingSpot() {}
 
     public ParkingSpot(SpotId id, Location location, SpotType type) {
         this.id = id;
@@ -35,7 +20,6 @@ public class ParkingSpot {
         this.type = type;
         this.status = SpotStatus.AVAILABLE;
     }
-
 
     // In reserve(), you could publish SpotReservedEvent
     // Core business logic
