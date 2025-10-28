@@ -30,7 +30,10 @@ public class Reservation {
         ReservationId id = ReservationId.newId();
         return new Reservation(id, customerId, spotId, timeSlot, null);
     }
-
+    // Reconstruction constructor (for loading from persistence)
+    public static Reservation reconstruct(ReservationId id, CustomerId costumerId, SpotId spotId, TimeSlot timeSlot) {
+        return new Reservation(id, costumerId, spotId, timeSlot, null);
+    }
 
     // In confirm(), you could publish ReservationConfirmedEvent
 

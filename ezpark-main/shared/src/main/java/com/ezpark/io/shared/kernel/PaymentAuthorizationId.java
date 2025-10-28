@@ -15,4 +15,8 @@ public record PaymentAuthorizationId(UUID value) {
     public static PaymentAuthorizationId newId() {
         return new PaymentAuthorizationId(UUID.randomUUID());
     }
+    public static PaymentAuthorizationId from(UUID uuid) {
+        return new PaymentAuthorizationId(uuid);
+    }
+
 }
