@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class JpaEntityModelMapper {
+public class JpaCustomerEntityModelMapper {
 
     public Customer toModel(JpaCustomerEntity entityCustomer) {
         Email email = new Email(entityCustomer.getEmail().getValue());
