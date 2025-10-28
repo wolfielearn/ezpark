@@ -8,6 +8,7 @@ import com.ezpark.io.payment.domain.port.inbound.PaymentCommandService;
 import com.ezpark.io.payment.domain.port.outbound.PaymentAuthorizationRepository;
 import com.ezpark.io.payment.domain.port.outbound.ReservationAntiCorruptionService;
 import com.ezpark.io.shared.event.EventPublisher;
+import com.ezpark.io.shared.event.PaymentAuthorizedEvent;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import org.springframework.stereotype.Service;
@@ -38,13 +39,12 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         // convert VOs to primitives
 
         PaymentAuthorization auth = PaymentAuthorization.create(reservationId, amount, paymentMethod);
-
         paymentAuthorizationRepository.save(auth);
 
-//        eventPublisher.publish(new PaymentAuthorizedEvent(
-//                auth.getId().value(),
-//                reservationId.value(),
-//                amount.value()));
+        eventPublisher.publish(new PaymentAuthorizedEvent(
+                auth.getId().value(),
+                reservationId.value(),
+                amount.value()));
 
         return auth.getId();
     }

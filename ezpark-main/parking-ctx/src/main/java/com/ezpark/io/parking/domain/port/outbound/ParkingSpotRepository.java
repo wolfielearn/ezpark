@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface ParkingSpotRepository {
     ParkingSpot save(ParkingSpot parkingSpot);
     Optional<ParkingSpot> findById(SpotId spotId);
-    List<ParkingSpot> findAll();
-    List<ParkingSpot> findByStatus(com.ezpark.io.parking.domain.model.SpotStatus status);
+   List<ParkingSpot> findAll();
+    //List<ParkingSpot> findByStatus(SpotStatus status);
 }

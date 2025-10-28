@@ -3,7 +3,9 @@ package com.ezpark.io.parking.application.event;
 
 import com.ezpark.io.parking.domain.port.inbound.ParkingCommandService;
 import com.ezpark.io.parking.domain.port.inbound.ParkingEventHandler;
-
+import com.ezpark.io.shared.event.ReservationConfirmedEvent;
+import com.ezpark.io.shared.kernel.ReservationId;
+import com.ezpark.io.shared.kernel.SpotId;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,9 +18,12 @@ public class ParkingEventHandlerImpl implements ParkingEventHandler {
     }
 
     @Override
-    public void handleReservationConfirmed(Object event) {
+    public void handleReservationConfirmed(ReservationConfirmedEvent event) {
+
+        ReservationId reservationId = ReservationId.from(event.getReservationId());
+        SpotId spotId = SpotId.fromString(event.getSpotId());
         // Reserve the spot when reservation is confirmed
-        //parkingCommandService.reserveSpot(event.getSpotId(), event.getReservationId());
+        parkingCommandService.reserveSpot(spotId, reservationId);
     }
 
     @Override
