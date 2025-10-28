@@ -84,9 +84,6 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         // Reserve the physical spot
         parkingACL.reserveSpot(reservation.getSpotId().value(), reservationId.value());
 
-//        eventPublisher.publish(new SpotReservedEvent(
-//                reservationId.value(),
-//                paymentAuthId.value(), ));
     }
 
     @Override
