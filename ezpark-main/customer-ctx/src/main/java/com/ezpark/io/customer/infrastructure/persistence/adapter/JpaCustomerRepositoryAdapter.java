@@ -4,7 +4,7 @@ import com.ezpark.io.customer.domain.model.Customer;
 import com.ezpark.io.customer.domain.model.Email;
 import com.ezpark.io.customer.domain.port.outbound.CustomerRepository;
 import com.ezpark.io.customer.infrastructure.persistence.entities.JpaCustomerEntity;
-import com.ezpark.io.customer.infrastructure.persistence.mapper.JpaEntityModelMapper;
+import com.ezpark.io.customer.infrastructure.persistence.mapper.JpaCustomerEntityModelMapper;
 import com.ezpark.io.customer.infrastructure.persistence.repository.JpaCustomerRepository;
 import com.ezpark.io.shared.kernel.CustomerId;
 import org.springframework.stereotype.Component;
@@ -16,9 +16,9 @@ import java.util.UUID;
 public class JpaCustomerRepositoryAdapter implements CustomerRepository {
 
     private final JpaCustomerRepository jpaRepository;
-    private final JpaEntityModelMapper mapper;
+    private final JpaCustomerEntityModelMapper mapper;
 
-    public JpaCustomerRepositoryAdapter(JpaCustomerRepository jpaRepository, JpaEntityModelMapper mapper) {
+    public JpaCustomerRepositoryAdapter(JpaCustomerRepository jpaRepository, JpaCustomerEntityModelMapper mapper) {
         this.jpaRepository = jpaRepository;
         this.mapper = mapper;
     }
