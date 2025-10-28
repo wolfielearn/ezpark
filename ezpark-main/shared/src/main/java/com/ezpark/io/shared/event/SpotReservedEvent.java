@@ -4,19 +4,21 @@ package com.ezpark.io.shared.event;
 import com.ezpark.io.shared.kernel.SpotId;
 import com.ezpark.io.shared.kernel.ReservationId;
 
+import java.util.UUID;
+
 public class SpotReservedEvent extends DomainEvent {
-    private SpotId spotId;
-    private ReservationId reservationId;
+    private String spotId;
+    private UUID reservationId;
 
     public SpotReservedEvent() {
     }
 
-    public SpotReservedEvent(SpotId spotId, ReservationId reservationId) {
+    public SpotReservedEvent(String spotId, UUID reservationId) {
         this.spotId = spotId;
         this.reservationId = reservationId;
         setEventType("SpotReservedEvent");
     }
 
-    public SpotId getSpotId() { return spotId; }
-    public ReservationId getReservationId() { return reservationId; }
+    public String getSpotId() { return spotId; }
+    public UUID getReservationId() { return reservationId; }
 }

@@ -1,18 +1,16 @@
 package com.ezpark.io.shared.event;
 
 
-import com.ezpark.io.shared.kernel.SpotId;
-
 public class SpotReleasedEvent extends DomainEvent {
-    private SpotId spotId;
+    private String spotId;
 
     public SpotReleasedEvent() {
     }
 
-    public SpotReleasedEvent(SpotId spotId) {
+    public SpotReleasedEvent(String spotId) {
         this.spotId = spotId;
         setEventType("SpotReleasedEvent");
     }
 
-    public SpotId getSpotId() { return spotId; }
+    public String getSpotId() { return spotId; }
 }
