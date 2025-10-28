@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface ParkingSpotAntiCorruptionService {
     boolean isSpotAvailable(String spotId);
     SpotDetailsView getSpotDetails(String spotId);
-    void reserveSpot(String spotId, UUID reservationId);
+    boolean reserveSpot(String spotId, UUID reservationId);
     boolean checkAvailability(String spotId, Instant startTime, Instant endTime);
 
 }
