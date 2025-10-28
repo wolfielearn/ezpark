@@ -1,7 +1,8 @@
-package com.ezpark.io.payment.application.event;
+package com.ezpark.io.payment.infrastructure.event.consumers;
 
 import com.ezpark.io.payment.domain.port.inbound.PaymentEventHandler;
 import com.ezpark.io.shared.event.PaymentAuthorizationRequestedEvent;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -18,26 +19,30 @@ public class PaymentEventKafkaConsumer  {
 
     public PaymentEventKafkaConsumer(PaymentEventHandler paymentEventHandler) {
         this.paymentEventHandler = paymentEventHandler;
-        // 👇 EXPLICITLY register the JavaTimeModule => to avoid problem in Instant conversion
         this.objectMapper.registerModule(new JavaTimeModule());
         this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         log.info("ObjectMapper configured with JavaTimeModule");
     }
 
     @KafkaListener(topics = "reservation-events", groupId = "reservation-ctx-group")
-    public void handleReservationRequested(String message) {
-        log.info("--------HANDLE RESERVATIONREQUESTEDEVENT CALLED SUCCESSFULLY----------------");
+    public void handleAuthorizationRequested(String message) {
+        log.info("--------HANDLE Authorization_REQUESTED CALLED SUCCESSFULLY----------------");
         try {
-            PaymentAuthorizationRequestedEvent event = objectMapper.readValue(
-                    message, PaymentAuthorizationRequestedEvent.class);
+            JsonNode jsonNode = objectMapper.readTree(message);
+            String eventType = jsonNode.get("eventType").asText();
+            if ("PaymentAuthorizationRequestedEvent".equals(eventType)) {
+                PaymentAuthorizationRequestedEvent  event = objectMapper.readValue(
+                        message, PaymentAuthorizationRequestedEvent.class);
+                log.info("Received PaymentAuthorizationRequestedEvent: {}", event.getEventId());
+                paymentEventHandler.handlePaymentAuthorizationRequested(event);
 
-            log.info("Received PaymentAuthorizationRequestedEvent: {}", event.getEventId());
+            }else {
+                log.debug("Skipping {}.", eventType);
 
-            paymentEventHandler.handleReservationRequested(event);
+            }
+        } catch (Exception ex) {
 
-        } catch (Exception e) {
-            log.error("Failed to process payment authorization message. Message: {}", message, e);
+            log.error("Failed to process payment authorization message. Message: {}", message, ex);
         }
     }
-
 }

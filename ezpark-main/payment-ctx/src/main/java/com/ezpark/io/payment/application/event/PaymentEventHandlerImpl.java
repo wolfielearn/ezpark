@@ -1,4 +1,4 @@
-package com.ezpark.io.payment.application.service;
+package com.ezpark.io.payment.application.event;
 
 import com.ezpark.io.payment.domain.model.Amount;
 import com.ezpark.io.payment.domain.model.PaymentMethod;
@@ -19,12 +19,11 @@ public class PaymentEventHandlerImpl implements PaymentEventHandler {
     }
 
     @Override
-    public void handleReservationRequested(PaymentAuthorizationRequestedEvent event) {
+    public void handlePaymentAuthorizationRequested(PaymentAuthorizationRequestedEvent event) {
         UUID uuid = UUID.fromString(event.getReservationId());
         ReservationId reservationId = ReservationId.from(uuid);
-
         Amount amount = new Amount(event.getAmount());
-        paymentCommandService.authorizePayment(reservationId, amount, PaymentMethod.CREDIT_CARD);
 
+        paymentCommandService.authorizePayment(reservationId, amount, PaymentMethod.CREDIT_CARD);
     }
 }
