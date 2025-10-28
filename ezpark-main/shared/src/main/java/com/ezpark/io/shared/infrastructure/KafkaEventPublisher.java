@@ -57,7 +57,7 @@ public class KafkaEventPublisher implements EventPublisher {
                         Map.entry("CheckInCompletedEvent", reservationTopic),
                         Map.entry("CheckOutCompletedEvent", parkingTopic),
                         Map.entry("SpotMaintenanceEvent", parkingTopic),
-                        Map.entry("SpotReservedEvent", parkingTopic)
+                        Map.entry("SpotReservedEvent", reservationTopic)
             );
         }
     @Override
