@@ -3,6 +3,7 @@ package com.ezpark.io.reservation.application.service;
 
 import com.ezpark.io.reservation.domain.model.Reservation;
 import com.ezpark.io.reservation.domain.model.TimeSlot;
+import com.ezpark.io.reservation.domain.port.inbound.ReservationCommandService;
 import com.ezpark.io.reservation.domain.port.outbound.CustomerAntiCorruptionService;
 import com.ezpark.io.reservation.domain.port.outbound.ParkingSpotAntiCorruptionService;
 import com.ezpark.io.reservation.domain.port.outbound.ReservationRepository;
@@ -69,7 +70,7 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
                 startTime, endTime
         ));
 
-        return reservation.getId();
+        return savedReservation.getId();
     }
 
     @Override
@@ -82,10 +83,10 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
 
         // Reserve the physical spot
         parkingACL.reserveSpot(reservation.getSpotId().value(), reservationId.value());
-//
-//        eventPublisher.publish(new ReservationConfirmedEvent(
-//                reservationId.value(), paymentAuthId.value(), reservation.getSpotId().value(), reservation.getCustomerId().value()
-//        ));
+
+//        eventPublisher.publish(new SpotReservedEvent(
+//                reservationId.value(),
+//                paymentAuthId.value(), ));
     }
 
     @Override

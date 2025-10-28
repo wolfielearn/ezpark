@@ -15,6 +15,7 @@ public class CustomerRegisteredEvent extends DomainEvent {
         this.customerId = customerId;
         this.email = email;
         this.name = name;
+        setEventType("CustomerRegisteredEvent");
     }
 
     public UUID getCustomerId() { return customerId; }

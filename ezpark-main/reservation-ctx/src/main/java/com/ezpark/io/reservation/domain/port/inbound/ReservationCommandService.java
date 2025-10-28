@@ -1,4 +1,4 @@
-package com.ezpark.io.reservation.application.service;
+package com.ezpark.io.reservation.domain.port.inbound;
 
 
 import com.ezpark.io.reservation.domain.model.TimeSlot;

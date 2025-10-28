@@ -1,6 +1,6 @@
 package com.ezpark.io.reservation.infrastructure.web;
 
-import com.ezpark.io.reservation.application.service.ReservationCommandService;
+import com.ezpark.io.reservation.domain.port.inbound.ReservationCommandService;
 import com.ezpark.io.reservation.domain.model.TimeSlot;
 import com.ezpark.io.shared.kernel.CustomerId;
 import com.ezpark.io.shared.kernel.ReservationId;

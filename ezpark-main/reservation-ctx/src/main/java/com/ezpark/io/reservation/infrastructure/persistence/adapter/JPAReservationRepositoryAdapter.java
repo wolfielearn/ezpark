@@ -35,8 +35,8 @@ public class JPAReservationRepositoryAdapter implements ReservationRepository {
 
     @Override
     public Optional<Reservation> findById(ReservationId reservationId) {
-        jpaReservationRepository.findById(reservationId.value());
-        return Optional.empty();
+        Optional<JPAReservationEntity> reservationEntity = jpaReservationRepository.findById(reservationId.value());
+        return reservationEntity.map(mapper::toDomain);
     }
 
     @Override

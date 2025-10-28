@@ -16,6 +16,9 @@ public record CustomerId(UUID value) {
     public static CustomerId newId() {
         return new CustomerId(UUID.randomUUID());
     }
+    public static CustomerId from(UUID uuid) {
+        return new CustomerId(uuid);
+    }
 
     public static CustomerId fromString(String value) {
         return new CustomerId(UUID.fromString(value));

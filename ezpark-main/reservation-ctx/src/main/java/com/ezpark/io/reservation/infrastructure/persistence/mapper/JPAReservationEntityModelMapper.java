@@ -4,10 +4,10 @@ import com.ezpark.io.reservation.domain.model.Reservation;
 import com.ezpark.io.reservation.domain.model.TimeSlot;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.JPAReservationEntity;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaCustomerId;
-import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaPaymentAuthorizationId;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaSpotId;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaTimeSlot;
 import com.ezpark.io.shared.kernel.CustomerId;
+import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
 import org.springframework.stereotype.Component;
 
@@ -31,13 +31,11 @@ public class JPAReservationEntityModelMapper {
     }
 
     public Reservation toDomain(JPAReservationEntity entity) {
-        return Reservation.create(
-                new CustomerId(entity.getCustomerId().getValue()),
-                new SpotId(entity.getSpotId().getValue()),
-                new TimeSlot(
-                        entity.getTimeSlot().getStartTime(),
-                        entity.getTimeSlot().getEndTime()
-                )
-        );
+
+        ReservationId reservationId = ReservationId.from(entity.getId());
+        CustomerId customerId = CustomerId.from(entity.getCustomerId().getValue());
+        SpotId spotId = SpotId.fromString(entity.getSpotId().getValue());
+        TimeSlot timeSlot = new TimeSlot(entity.getTimeSlot().getStartTime(), entity.getTimeSlot().getEndTime());
+       return Reservation.reconstruct(reservationId, customerId, spotId, timeSlot);
     }
 }
