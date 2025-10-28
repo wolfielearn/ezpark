@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Component
 public class KafkaEventPublisher implements EventPublisher {
-    Logger log = LoggerFactory.getLogger(KafkaEventPublisher.class);
+    Logger LOGGER = LoggerFactory.getLogger(KafkaEventPublisher.class);
 
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String, String> kafkaTemplate;
@@ -67,9 +67,9 @@ public class KafkaEventPublisher implements EventPublisher {
             String topic = determineTopic(event);
 
             kafkaTemplate.send(topic, jsonEvent);
-            log.info("Published to Kafka - Topic: {}, Event: {}", topic, event.getClass().getSimpleName());
+            LOGGER.info("Published to Kafka - Topic: {}, Event: {}", topic, event.getClass().getSimpleName());
         } catch ( JsonProcessingException e) {
-            log.error("Failed to serialize  event", e);
+            LOGGER.error("Failed to serialize  event", e);
         }
     }
 

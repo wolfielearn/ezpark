@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ReservationEventKafkaConsumer {
-    Logger log = LoggerFactory.getLogger(ReservationEventKafkaConsumer.class);
+    Logger LOGGER = LoggerFactory.getLogger(ReservationEventKafkaConsumer.class);
 
     private final ReservationEventHandler reservationEventHandler;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -24,29 +24,26 @@ public class ReservationEventKafkaConsumer {
         // EXPLICITLY register the JavaTimeModule => to avoid problem in Instant conversion
         this.objectMapper.registerModule(new JavaTimeModule());
         this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        log.info("ObjectMapper configured with JavaTimeModule");
+        LOGGER.info("ObjectMapper configured with JavaTimeModule");
     }
 
     @KafkaListener(topics = "reservation-events", groupId = "payment-ctx-group")
     public void handlePaymentAuthorized(String message) {
-        log.info("--------HANDLE PaymentAuthorizedEvent CALLED SUCCESSFULLY----------------");
+        LOGGER.info("--------HANDLE PaymentAuthorizedEvent CALLED SUCCESSFULLY----------------");
         try {
-            System.out.println("message :"+ message);
-
-
             JsonNode jsonNode = objectMapper.readTree(message);
             String eventType = jsonNode.get("eventType").asText();
 
             if ("PaymentAuthorizedEvent".equals(eventType)){
                 PaymentAuthorizedEvent event = objectMapper.readValue(message, PaymentAuthorizedEvent.class);
-                log.info("Received PaymentAuthorizedEvent: {}", event.getEventId());
+                LOGGER.info("Received PaymentAuthorizedEvent: {}", event.getEventId());
                 reservationEventHandler.handlePaymentAuthorized(event);
             }else {
-                log.debug("Skipping non-PaymentAuthorized event: {}", eventType);
+                LOGGER.debug("Skipping non-PaymentAuthorized event: {}", eventType);
 
             }
         } catch (Exception e) {
-            log.error("Failed to process payment authorization message. Message: {}", message, e);
+            LOGGER.error("Failed to process payment authorization message. Message: {}", message, e);
         }
     }
 
