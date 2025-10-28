@@ -4,12 +4,16 @@ import com.ezpark.io.reservation.domain.model.Reservation;
 import com.ezpark.io.reservation.domain.model.TimeSlot;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.JPAReservationEntity;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaCustomerId;
+import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaPaymentAuthorizationId;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaSpotId;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaTimeSlot;
 import com.ezpark.io.shared.kernel.CustomerId;
+import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class JPAReservationEntityModelMapper {
@@ -24,9 +28,10 @@ public class JPAReservationEntityModelMapper {
                 reservation.getTimeSlot().endTime()
         ));
         entity.setStatus(reservation.getStatus());
-//        entity.setPaymentAuthId(new JpaPaymentAuthorizationId(
-//                reservation.getPaymentAuthId().value()
-//        ));
+        UUID paymentAuthorizationId = reservation.getPaymentAuthId() != null ? reservation.getPaymentAuthId().value() : null;
+        if(paymentAuthorizationId != null ){
+            entity.setPaymentAuthId(new JpaPaymentAuthorizationId(paymentAuthorizationId));
+        }
         return entity;
     }
 
@@ -36,6 +41,10 @@ public class JPAReservationEntityModelMapper {
         CustomerId customerId = CustomerId.from(entity.getCustomerId().getValue());
         SpotId spotId = SpotId.fromString(entity.getSpotId().getValue());
         TimeSlot timeSlot = new TimeSlot(entity.getTimeSlot().getStartTime(), entity.getTimeSlot().getEndTime());
-       return Reservation.reconstruct(reservationId, customerId, spotId, timeSlot);
+        PaymentAuthorizationId paymentAuthorizationId = null;
+        if(entity.getPaymentAuthId() != null){
+            paymentAuthorizationId  = PaymentAuthorizationId.from(entity.getPaymentAuthId().getValue());
+        }
+       return Reservation.reconstruct(reservationId, customerId, spotId, timeSlot,paymentAuthorizationId);
     }
 }

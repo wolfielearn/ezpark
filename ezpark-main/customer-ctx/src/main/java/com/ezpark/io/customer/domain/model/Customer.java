@@ -12,14 +12,11 @@ import java.util.Objects;
 
 
 public class Customer {
+
     private CustomerId id;
-
     private Email email;
-
     private String name;
-
     private List<Vehicle> vehicles = new ArrayList<>();
-
     private List<DomainEvent> domainEvents = new ArrayList<>(); //  Domain events
 
     protected Customer() {} // For JPA
@@ -29,7 +26,6 @@ public class Customer {
         this.email = Objects.requireNonNull(email, "Email cannot be null");
         this.name = validateName(name);
         this.domainEvents.add(new CustomerRegisteredEvent(id.value(), name, email.value()));
-
     }
 
     // Factory method

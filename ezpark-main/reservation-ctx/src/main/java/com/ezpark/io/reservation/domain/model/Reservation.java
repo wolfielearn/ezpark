@@ -31,8 +31,8 @@ public class Reservation {
         return new Reservation(id, customerId, spotId, timeSlot, null);
     }
     // Reconstruction constructor (for loading from persistence)
-    public static Reservation reconstruct(ReservationId id, CustomerId costumerId, SpotId spotId, TimeSlot timeSlot) {
-        return new Reservation(id, costumerId, spotId, timeSlot, null);
+    public static Reservation reconstruct(ReservationId id, CustomerId costumerId, SpotId spotId, TimeSlot timeSlot, PaymentAuthorizationId paymentAuthId) {
+        return new Reservation(id, costumerId, spotId, timeSlot, paymentAuthId);
     }
 
     // In confirm(), you could publish ReservationConfirmedEvent
