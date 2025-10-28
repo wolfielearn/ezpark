@@ -3,6 +3,8 @@ package com.ezpark.io.parking.application.event;
 
 import com.ezpark.io.parking.domain.port.inbound.ParkingCommandService;
 import com.ezpark.io.parking.domain.port.inbound.ParkingEventHandler;
+import com.ezpark.io.shared.event.PaymentCapturedEvent;
+import com.ezpark.io.shared.event.ReservationCancelledEvent;
 import com.ezpark.io.shared.event.ReservationConfirmedEvent;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
@@ -27,13 +29,13 @@ public class ParkingEventHandlerImpl implements ParkingEventHandler {
     }
 
     @Override
-    public void handlePaymentCaptured(/*PaymentCapturedEvent*/ Object event) {
+    public void handlePaymentCaptured(PaymentCapturedEvent event) {
         // Release spot after payment is captured
         // Note: We'll implement releaseSpot ACL method
     }
 
     @Override
-    public void handleReservationCancelled(/*ReservationCancelledEvent*/ Object event) {
+    public void handleReservationCancelled(ReservationCancelledEvent event) {
         // Release spot if reservation is cancelled
         // Note: We'll implement releaseSpot ACL method
     }
