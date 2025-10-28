@@ -7,6 +7,7 @@ import java.util.UUID;
 public abstract class DomainEvent {
     private final UUID eventId;
     private final Instant occurredOn;
+    private String eventType;
 
     protected DomainEvent() {
         this.eventId = UUID.randomUUID();
@@ -14,4 +15,10 @@ public abstract class DomainEvent {
     }
     public UUID getEventId() { return eventId; }
     public Instant getOccurredOn() { return occurredOn; }
+
+    public String getEventType() {
+        return eventType;
+    }
+    public void  setEventType(String eventType) { this.eventType = eventType;
+    }
 }
