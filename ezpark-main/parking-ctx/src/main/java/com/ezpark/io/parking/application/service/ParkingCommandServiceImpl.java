@@ -51,17 +51,17 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
                 .orElseThrow(() -> new IllegalArgumentException("Parking spot not found"));
 
         // Calculate actual duration (in real system, would use actual times)
-        java.time.Duration actualDuration = java.time.Duration.ofHours(2); // Example
+        java.time.Duration actualDuration = java.time.Duration.ofHours(2);
 
         spot.checkOut();
         parkingSpotRepository.save(spot);
 
-//        eventPublisher.publish(new CheckOutCompletedEvent(
-//                spot.getCurrentReservationId(),
-//                spotId,
-//                actualDuration,
-//                java.time.Instant.now()
-//        ));
+        eventPublisher.publish(new CheckOutCompletedEvent(
+                spot.getCurrentReservationId(),
+                spotId,
+                actualDuration,
+                java.time.Instant.now()
+        ));
     }
 
     @Override

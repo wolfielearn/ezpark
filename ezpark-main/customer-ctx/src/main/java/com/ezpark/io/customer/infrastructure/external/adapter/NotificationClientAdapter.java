@@ -26,17 +26,14 @@ public class NotificationClientAdapter implements NotificationService {
     @Override
     public void sendReceipt(ReservationId reservationId, BigDecimal amount) {
         String uuid = reservationId.value().toString();
-        System.out.println("########################################");
-        System.out.println("Retrieving the Payment from the External payment service");
-        ResponseEntity<Reciept> exchange = restTemplate.exchange(URI.create("http://localhost:8080/payment/" + uuid ), HttpMethod.GET, HttpEntity.EMPTY, Reciept.class);
-       System.out.println("Message received from Payments :");
+        Reciept response = restTemplate.getForObject("http://localhost:8080/payment/{uuid}" , Reciept.class, uuid);
 
-        System.out.println(exchange.getBody());
+        System.out.println("Message received from Payments :");
+        System.out.println(response);
         System.out.println("########################################");
     }
 
     @Override
-
     public void sendReservationFailedNotification(CustomerId customerId, String reason) {
 
     }

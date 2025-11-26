@@ -38,7 +38,7 @@ public class ReservationEventKafkaConsumer {
                 PaymentAuthorizedEvent event = objectMapper.readValue(message, PaymentAuthorizedEvent.class);
                 LOGGER.info("Received PaymentAuthorizedEvent: {}", event.getEventId());
                 reservationEventHandler.handlePaymentAuthorized(event);
-            }else {
+            } else {
                 LOGGER.debug("Skipping non-PaymentAuthorized event: {}", eventType);
 
             }

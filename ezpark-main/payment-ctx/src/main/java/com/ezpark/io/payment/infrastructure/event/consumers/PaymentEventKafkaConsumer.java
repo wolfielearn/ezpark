@@ -36,12 +36,10 @@ public class PaymentEventKafkaConsumer  {
                 LOGGER.info("Received PaymentAuthorizationRequestedEvent: {}", event.getEventId());
                 paymentEventHandler.handlePaymentAuthorizationRequested(event);
 
-            }else {
+            } else {
                 LOGGER.debug("Skipping {}.", eventType);
-
             }
         } catch (Exception ex) {
-
             LOGGER.error("Failed to process payment authorization message. Message: {}", message, ex);
         }
     }

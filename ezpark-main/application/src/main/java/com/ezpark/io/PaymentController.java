@@ -14,6 +14,6 @@ public class PaymentController {
     @GetMapping("{id}")
     public Reciept  payment(@PathVariable("id") String id){
         // return "Success" ;
-        return new Reciept("Payment successfull", BigDecimal.valueOf(25));
+        return new Reciept("Payment successful", BigDecimal.valueOf(25));
     }
 }

@@ -15,51 +15,54 @@ import java.util.Map;
 
 @Component
 public class KafkaEventPublisher implements EventPublisher {
+
     Logger LOGGER = LoggerFactory.getLogger(KafkaEventPublisher.class);
 
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private Map<String, String> topicMapping;
 
-
-    @Value("${kafka.topics.customer-ctx:customer-events}")
+    @Value("${kafka.topics.customer-events:customer-events}")
     private String customerTopic;
 
-    @Value("${kafka.topics.reservation-ctx:reservation-events}")
+    @Value("${kafka.topics.reservation-events:reservation-events}")
     private String reservationTopic;
 
-    @Value("${kafka.topics.parking-ctx:parking-events}")
+    @Value("${kafka.topics.parking-events:parking-events}")
     private String parkingTopic;
 
-    @Value("${kafka.topics.payment-ctx:payment-events}")
+    @Value("${kafka.topics.payment-events:payment-events}")
     private String paymentTopic;
 
-    public KafkaEventPublisher(ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate, Map<String, String> topicMapping) {
+    public KafkaEventPublisher(ObjectMapper objectMapper,
+                               KafkaTemplate<String, String> kafkaTemplate,
+                               Map<String, String> topicMapping) {
         this.objectMapper = objectMapper;
         this.kafkaTemplate = kafkaTemplate;
         this.topicMapping = topicMapping;
     }
+
     @PostConstruct
     public void init() {
-                this.topicMapping = Map.ofEntries(
-                        Map.entry("CustomerRegisteredEvent", reservationTopic),
-                        Map.entry("ReservationRequestedEvent", reservationTopic),
-                        Map.entry("ReservationConfirmedEvent", reservationTopic),
-                        Map.entry("ReservationCancelledEvent", reservationTopic),
-                        Map.entry("ReservationFailedEvent", reservationTopic),
-                        Map.entry("PaymentAuthorizationRequestedEvent", reservationTopic),
-                        Map.entry("PaymentAuthorizationFailedEvent", reservationTopic),
-                        Map.entry("PaymentAuthorizedEvent", reservationTopic),
-                        Map.entry("PaymentCapturedEvent", reservationTopic),
-                        Map.entry("PaymentRefundedEvent", reservationTopic),
-                        Map.entry("SpotReleasedEvent", reservationTopic),
-                        Map.entry("ReservationCompletedEvent", reservationTopic),
-                        Map.entry("CheckInCompletedEvent", reservationTopic),
-                        Map.entry("CheckOutCompletedEvent", parkingTopic),
-                        Map.entry("SpotMaintenanceEvent", parkingTopic),
-                        Map.entry("SpotReservedEvent", reservationTopic)
-            );
-        }
+        this.topicMapping = Map.ofEntries(
+                Map.entry("CustomerRegisteredEvent", reservationTopic),
+                Map.entry("ReservationRequestedEvent", reservationTopic),
+                Map.entry("ReservationConfirmedEvent", reservationTopic),
+                Map.entry("ReservationCancelledEvent", reservationTopic),
+                Map.entry("ReservationFailedEvent", reservationTopic),
+                Map.entry("PaymentAuthorizationRequestedEvent", reservationTopic),
+                Map.entry("PaymentAuthorizationFailedEvent", reservationTopic),
+                Map.entry("PaymentAuthorizedEvent", reservationTopic),
+                Map.entry("PaymentCapturedEvent", reservationTopic),
+                Map.entry("PaymentRefundedEvent", reservationTopic),
+                Map.entry("SpotReleasedEvent", reservationTopic),
+                Map.entry("ReservationCompletedEvent", reservationTopic),
+                Map.entry("CheckInCompletedEvent", reservationTopic),
+                Map.entry("CheckOutCompletedEvent", parkingTopic),
+                Map.entry("SpotMaintenanceEvent", parkingTopic),
+                Map.entry("SpotReservedEvent", reservationTopic)
+        );
+    }
     @Override
     public void publish(DomainEvent event) {
         try {
@@ -79,6 +82,7 @@ public class KafkaEventPublisher implements EventPublisher {
             publish(event);
         }
     }
+
     private String determineTopic(DomainEvent event) {
         // Use class name instead of Class object
         String eventName = event.getClass().getSimpleName();

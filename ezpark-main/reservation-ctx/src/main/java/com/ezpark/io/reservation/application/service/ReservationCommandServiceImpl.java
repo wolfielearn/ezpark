@@ -57,7 +57,6 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         }
 
         // 3. Create reservation
-
         Reservation reservation = Reservation.create(customerId, spotId, timeSlot);
         Reservation savedReservation = reservationRepository.save(reservation);
 
