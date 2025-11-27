@@ -1,10 +1,11 @@
-# This section will be updated later, to describe how you can run the application.
+### This section will be updated later, to describe how you can run the application.
 - For now only the customer registration, adding vehicles to customer and resarvation creation is implemented.
   
-# Start the application
+#### Start the application
   - docker compose up
+  - locally : start the application module - as spring boot
 
-# Endpoints:
+#### Endpoints:
 
 - Customer :
   - POST localhost:8080/customers
