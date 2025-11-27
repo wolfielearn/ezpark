@@ -1,5 +1,6 @@
-### This section will be updated later, to describe how you can run the application.
-- Implemented :For now only the customer registration, adding vehicles to customer and reservation creation.
+
+    * For now only the customer registration, adding vehicles to customer and reservation creation.
+    * Later will be the check in/ check out process
   
 #### Start the application
     - docker compose up
