@@ -5,6 +5,7 @@
     - docker compose up
     - locally :
         - clone project
+        - start postgres and kafka from the docker-compose file
         - start the application module - as spring boot
 
 #### Endpoints:
