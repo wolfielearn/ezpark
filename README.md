@@ -42,10 +42,8 @@ The Solution
       - Time slot management
       - Session tracking (check-in/check-out)    
       
-    - PAYMENT & PRICING - Responsibility: Money matters
-      - Dynamic pricing
-      - Payment processing
-      - Receipts
+    - PAYMENT  - Responsibility: Money matters
+    
 
 ### 2. UBIQUITOUS LANGUAGE DEFINITION
 
@@ -56,7 +54,7 @@ The Solution
       Reservation Context: 
             - Reservation, TimeSlot, ParkingSession, CheckIn, CheckOut
       Payment Context: 
-            - Pricing, Invoice, Payment, Receipt
+            - Payment, Receipt
             
 ### 3. CONTEXT MAPPING & INTEGRATION
 
