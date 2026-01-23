@@ -75,29 +75,5 @@ The Solution
       7.  Customer checks out → Parking session ends
       8.  System generates invoice → Processes payment
       9.  Payment processed → Spot released
-       Commands & events
-            RegisterCustomer	--> CustomerRegistered
-            RequestReservation-->	ReservationRequested
-            CheckAvailability-->	AvailabilityConfirmed
-            AuthorizePayment	System policy	PaymentAuthorized
-            ReserveSpot	System policy	SpotReserved
-            ConfirmReservation	System policy	ReservationConfirmed
-            CheckInVehicle	User action	CheckInCompleted
-            CheckOutVehicle	User action	CheckOutCompleted
-            GenerateInvoice	System policy	InvoiceGenerated
-            ProcessPayment	System policy	PaymentProcessed
-            ReleaseSpot	System policy	SpotReleased
-       Policies (Business Rules)
-            When Reservation Requested → Then Check Availability
-            When Availability Confirmed → Then Authorize Payment
-            When Payment Authorized → Then Reserve Spot
-            When Spot Reserved → Then Confirm Reservation
-            When Check Out Completed → Then Generate Invoice
-            When Payment Processed → Then Release Spot
-            When Spot Released → Then Send Receipt
-### 5.Business workflow 
-<img width="900" height="1884" alt="Smart Parking System - sequence Flow" src="https://github.com/user-attachments/assets/11bc1509-8ee1-40ba-8c4e-85a011f9feee" />
-
-
 
 
