@@ -2,7 +2,10 @@
     * For now only the customer registration, adding vehicles to customer and reservation creation.
     * Later will be the check in/ check out process
   
-#### Start the application
+#### Start the application 
+    - Java 17
+    - Maven
+    --------------------------------------
     - docker compose up
     - locally :
         - clone project
