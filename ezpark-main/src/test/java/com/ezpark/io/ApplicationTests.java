@@ -1,10 +1,11 @@
-package com.ezpark.io.ezpark_main;
+package com.ezpark.io;
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EzparkMainApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

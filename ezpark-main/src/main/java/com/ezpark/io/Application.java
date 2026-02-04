@@ -11,7 +11,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 @EnableJpaRepositories(basePackages = "com.ezpark.io")
 @EntityScan(basePackages = "com.ezpark.io")
 @EnableKafka // 👈 MAKE SURE THIS IS PRESENT
-public class App
+public class Application
 {
-    public static void main(String[] args) { SpringApplication.run(App.class, args);}
+    public static void main(String[] args) { SpringApplication.run(Application.class, args);}
 }
