@@ -2,16 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ezpark.io</groupId>
-        <artifactId>parking-ddd-demo</artifactId>
-        <version>1.0.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.0</version>
+        <relativePath/>
     </parent>
-
+    <groupId>com.ezpark.io</groupId>
     <artifactId>customer-ctx</artifactId>
-    <name>EZPark Customer Context</name>
-    <description>Customer management bounded context</description>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
+    <name>EZPark Customer Context</name>
+    <description>Customer management bounded context</description>
     <dependencies>
         <!-- ===== SHARED DEPENDENCIES ===== -->
 
@@ -23,10 +25,10 @@
         </dependency>
 
         <!-- DDD Annotations for Domain Models -->
-        <dependency>
-            <groupId>org.jmolecules</groupId>
-            <artifactId>jmolecules-ddd</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jmolecules</groupId>-->
+<!--            <artifactId>jmolecules-ddd</artifactId>-->
+<!--        </dependency>-->
 
         <!-- ===== SPRING BOOT STARTERS ===== -->
 

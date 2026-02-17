@@ -2,14 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ezpark.io</groupId>
-        <artifactId>parking-ddd-demo</artifactId>
-        <version>1.0.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.0</version>
+        <relativePath/>
     </parent>
 
+    <groupId>com.ezpark.io</groupId>
     <artifactId>shared</artifactId>
-    <name>EZPark Shared</name>
-    <description>Shared domain concepts and technical infrastructure</description>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!-- ===== DOMAIN DEPENDENCIES (Kernel) ===== -->
@@ -21,10 +23,10 @@
         </dependency>
 
         <!-- DDD Annotations for Value Objects and Identifiers -->
-        <dependency>
-            <groupId>org.jmolecules</groupId>
-            <artifactId>jmolecules-ddd</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jmolecules</groupId>-->
+<!--            <artifactId>jmolecules-ddd</artifactId>-->
+<!--        </dependency>-->
 
         <!-- ===== INFRASTRUCTURE DEPENDENCIES ===== -->
 

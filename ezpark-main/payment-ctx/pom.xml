@@ -2,12 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ezpark.io</groupId>
-        <artifactId>parking-ddd-demo</artifactId>
-        <version>1.0.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.0</version>
+        <relativePath/>
     </parent>
-
+    <groupId>com.ezpark.io</groupId>
     <artifactId>payment-ctx</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
     <name>EZPark Payment Context</name>
     <description>Payment processing bounded context</description>
 
@@ -20,10 +24,10 @@
         </dependency>
 
         <!-- DDD Annotations for Domain Models -->
-        <dependency>
-            <groupId>org.jmolecules</groupId>
-            <artifactId>jmolecules-ddd</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jmolecules</groupId>-->
+<!--            <artifactId>jmolecules-ddd</artifactId>-->
+<!--        </dependency>-->
 
         <!-- Data JPA for Repository implementations -->
         <dependency>
@@ -42,6 +46,10 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
         </dependency>
 
         <!-- Testing -->
