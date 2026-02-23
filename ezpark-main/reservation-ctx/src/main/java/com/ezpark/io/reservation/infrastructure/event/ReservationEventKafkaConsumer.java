@@ -24,19 +24,20 @@ public class ReservationEventKafkaConsumer {
         this.objectMapper = objectMapper;
     }
 
-    @KafkaListener(topics = "reservation-events", groupId = "reservation-ctx-group")
+    @KafkaListener(topics = "reservation-events", groupId = "payment-ctx-group")
     public void handlePaymentAuthorized(String message) {
-        LOGGER.info("--------HANDLE PaymentAuthorizedEvent CALLED SUCCESSFULLY----------------");
+
         try {
             JsonNode jsonNode = objectMapper.readTree(message);
             String eventType = jsonNode.get("eventType").asText();
 
-            if ("PaymentAuthorizedEvent".equals(eventType)){
+            if ("PaymentAuthorizedEvent".equals(eventType)) {
+                LOGGER.info("--------HANDLE PaymentAuthorizedEvent CALLED SUCCESSFULLY----------------");
                 PaymentAuthorizedEvent event = objectMapper.readValue(message, PaymentAuthorizedEvent.class);
                 LOGGER.info("Received PaymentAuthorizedEvent: {}", event.getEventId());
                 reservationEventHandler.handlePaymentAuthorized(event);
             } else {
-                LOGGER.debug("Skipping non-PaymentAuthorized event: {}", eventType);
+                LOGGER.debug("Skipping: {}", eventType);
 
             }
         } catch (Exception e) {

@@ -30,7 +30,6 @@ spring:
         linger.ms: 0
         batch.size: 16384
         buffer.memory: 33554432
-
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -41,7 +40,7 @@ spring:
         heartbeat.interval.ms: 3000
         #        "[spring.json.value.default.type]": "*"
         "[spring.json.trusted.packages]": "com.ezpark.io"
-        group-id: test-ctx-group
+        group-id: reservation-ctx-group, payment-ctx-group
   listener:
     type: single
     #    ack-mode: manual_immediate
