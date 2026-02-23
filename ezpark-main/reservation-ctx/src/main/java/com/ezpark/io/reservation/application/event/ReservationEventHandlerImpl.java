@@ -2,11 +2,9 @@ package com.ezpark.io.reservation.application.event;
 
 import com.ezpark.io.reservation.domain.port.inbound.ReservationCommandService;
 import com.ezpark.io.reservation.domain.port.inbound.ReservationEventHandler;
-import com.ezpark.io.shared.event.PaymentAuthorizationRequestedEvent;
 import com.ezpark.io.shared.event.PaymentAuthorizedEvent;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
-import org.jmolecules.ddd.annotation.Service;
 import org.springframework.stereotype.Component;
 
 

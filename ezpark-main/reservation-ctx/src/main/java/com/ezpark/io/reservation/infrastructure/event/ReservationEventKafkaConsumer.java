@@ -16,18 +16,15 @@ public class ReservationEventKafkaConsumer {
     Logger LOGGER = LoggerFactory.getLogger(ReservationEventKafkaConsumer.class);
 
     private final ReservationEventHandler reservationEventHandler;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
-    public ReservationEventKafkaConsumer(ReservationEventHandler reservationEventHandler) {
+    public ReservationEventKafkaConsumer(ReservationEventHandler reservationEventHandler,
+                                         ObjectMapper objectMapper) {
         this.reservationEventHandler = reservationEventHandler;
-
-        // EXPLICITLY register the JavaTimeModule => to avoid problem in Instant conversion
-        this.objectMapper.registerModule(new JavaTimeModule());
-        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        LOGGER.info("ObjectMapper configured with JavaTimeModule");
+        this.objectMapper = objectMapper;
     }
 
-    @KafkaListener(topics = "reservation-events", groupId = "payment-ctx-group")
+    @KafkaListener(topics = "reservation-events", groupId = "reservation-ctx-group")
     public void handlePaymentAuthorized(String message) {
         LOGGER.info("--------HANDLE PaymentAuthorizedEvent CALLED SUCCESSFULLY----------------");
         try {

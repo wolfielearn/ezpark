@@ -15,22 +15,21 @@ import org.springframework.stereotype.Component;
 public class PaymentEventKafkaConsumer  {
     Logger LOGGER = LoggerFactory.getLogger(PaymentEventKafkaConsumer.class);
     private final PaymentEventHandler paymentEventHandler;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
-    public PaymentEventKafkaConsumer(PaymentEventHandler paymentEventHandler) {
+    public PaymentEventKafkaConsumer(PaymentEventHandler paymentEventHandler, ObjectMapper objectMapper) {
         this.paymentEventHandler = paymentEventHandler;
-        this.objectMapper.registerModule(new JavaTimeModule());
-        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        LOGGER.info("ObjectMapper configured with JavaTimeModule");
+        this.objectMapper = objectMapper;
     }
 
     @KafkaListener(topics = "reservation-events", groupId = "reservation-ctx-group")
     public void handleAuthorizationRequested(String message) {
-        LOGGER.info("--------HANDLE Authorization_REQUESTED CALLED SUCCESSFULLY----------------");
+
         try {
             JsonNode jsonNode = objectMapper.readTree(message);
             String eventType = jsonNode.get("eventType").asText();
             if ("PaymentAuthorizationRequestedEvent".equals(eventType)) {
+                LOGGER.info("--------HANDLE AuthorizationRequestedEvent CALLED SUCCESSFULLY----------------");
                 PaymentAuthorizationRequestedEvent  event = objectMapper.readValue(
                         message, PaymentAuthorizationRequestedEvent.class);
                 LOGGER.info("Received PaymentAuthorizationRequestedEvent: {}", event.getEventId());
