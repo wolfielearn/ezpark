@@ -9,8 +9,12 @@ public class ReservationCompletedEvent extends DomainEvent {
     }
     public ReservationCompletedEvent(UUID reservationId) {
         this.reservationId = reservationId;
-        setEventType("ReservationCancelledEvent");
     }
 
     public UUID getReservationId() { return reservationId; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.toString();
+    }
 }

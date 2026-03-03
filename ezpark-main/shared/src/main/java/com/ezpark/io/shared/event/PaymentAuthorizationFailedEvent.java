@@ -17,10 +17,14 @@ public class PaymentAuthorizationFailedEvent extends DomainEvent {
         this.reservationId = reservationId;
         this.attemptedAmount = attemptedAmount;
         this.failureReason = failureReason;
-        setEventType("PaymentAuthorizationFailedEvent");
-    }
+     }
 
     public ReservationId getReservationId() { return reservationId; }
     public BigDecimal getAttemptedAmount() { return attemptedAmount; }
     public String getFailureReason() { return failureReason; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.value().toString();
+    }
 }

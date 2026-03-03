@@ -21,11 +21,15 @@ public class PaymentRefundedEvent extends DomainEvent {
         this.reservationId = reservationId;
         this.refundedAmount = refundedAmount;
         this.refundReason = refundReason;
-        setEventType("PaymentRefundedEvent");
     }
 
     public PaymentAuthorizationId getPaymentAuthId() { return paymentAuthId; }
     public UUID getReservationId() { return reservationId; }
     public BigDecimal getRefundedAmount() { return refundedAmount; }
     public String getRefundReason() { return refundReason; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.toString();
+    }
 }

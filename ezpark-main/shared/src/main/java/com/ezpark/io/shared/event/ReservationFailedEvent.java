@@ -20,11 +20,15 @@ public class ReservationFailedEvent extends DomainEvent {
         this.spotId = spotId;
         this.customerId = customerId;
         this.failureReason = failureReason;
-        setEventType("ReservationFailedEvent");
     }
 
     public ReservationId getReservationId() { return reservationId; }
     public SpotId getSpotId() { return spotId; }
     public CustomerId getCustomerId() { return customerId; }
     public String getFailureReason() { return failureReason; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.toString();
+    }
 }

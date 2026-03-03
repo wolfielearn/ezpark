@@ -16,11 +16,15 @@ public class ReservationConfirmedEvent extends DomainEvent {
         this.paymentAuthId = paymentAuthId;
         this.spotId = spotId;
         this.customerId = customerId;
-        setEventType("ReservationConfirmedEvent");
     }
 
     public UUID getReservationId() { return reservationId; }
     public UUID getPaymentAuthId() { return paymentAuthId; }
     public String getSpotId() { return spotId; }
     public UUID getCustomerId() { return customerId; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.toString();
+    }
 }

@@ -19,12 +19,15 @@ public class CheckOutCompletedEvent extends DomainEvent {
         this.reservationId = reservationId;
         this.spotId = spotId;
         this.actualDuration = actualDuration;
-        this.checkOutTime = checkOutTime;
-        this.setEventType("CheckOutCompletedEvent");
-    }
+        this.checkOutTime = checkOutTime;}
 
     public ReservationId getReservationId() { return reservationId; }
     public SpotId getSpotId() { return spotId; }
     public Duration getActualDuration() { return actualDuration; }
     public Instant getCheckOutTime() { return checkOutTime; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.value().toString();
+    }
 }

@@ -16,11 +16,14 @@ public class PaymentAuthorizedEvent extends DomainEvent {
         this.paymentAuthId = paymentAuthId;
         this.reservationId = reservationId;
         this.authorizedAmount = authorizedAmount;
-        setEventType("PaymentAuthorizedEvent");
     }
-
 
     public UUID getPaymentAuthId() { return paymentAuthId; }
     public UUID getReservationId() { return reservationId; }
     public BigDecimal getAuthorizedAmount() { return authorizedAmount; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.toString();
+    }
 }

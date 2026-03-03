@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -23,13 +24,32 @@ public class ReservationEventKafkaConsumer {
         this.reservationEventHandler = reservationEventHandler;
         this.objectMapper = objectMapper;
     }
+    @KafkaListener(
+            topics = "${kafka.topics.payment-events}",
+            groupId = "${kafka.groups.reservation}"
+    )
+    public void handlePaymentEvents(String message) { } // dispatch
 
-    @KafkaListener(topics = "reservation-events", groupId = "payment-ctx-group")
-    public void handlePaymentAuthorized(String message) {
+    @KafkaListener(
+            topics = "${kafka.topics.parking-events}",
+            groupId = "${kafka.groups.reservation}"
+    )
+    public void handleParkingEvents(String message){}
+
+
+    @KafkaListener(
+            topics = "${kafka.topics.reservation-events}",
+            groupId = "${kafka.groups.payment}"
+    )
+    public void handleReservationEvent(String message) {
 
         try {
             JsonNode jsonNode = objectMapper.readTree(message);
-            String eventType = jsonNode.get("eventType").asText();
+            String eventType = jsonNode.get("eventType").asText(null);
+            if (eventType == null) {
+                LOGGER.warn("Missing eventType. message={}", message);
+                return;
+            }
 
             if ("PaymentAuthorizedEvent".equals(eventType)) {
                 LOGGER.info("--------HANDLE PaymentAuthorizedEvent CALLED SUCCESSFULLY----------------");

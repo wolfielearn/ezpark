@@ -16,10 +16,14 @@ import java.util.UUID;
             this.paymentAuthId = paymentAuthId;
             this.reservationId = reservationId;
             this.capturedAmount = capturedAmount;
-            setEventType("PaymentCapturedEvent");
         }
 
         public UUID getPaymentAuthId() { return paymentAuthId; }
         public UUID getReservationId() { return reservationId; }
         public BigDecimal getCapturedAmount() { return capturedAmount; }
+
+        @Override
+        public String partitionKey() {
+            return reservationId.toString();
+        }
     }

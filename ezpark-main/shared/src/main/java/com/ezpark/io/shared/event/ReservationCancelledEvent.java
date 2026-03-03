@@ -15,10 +15,14 @@ public class ReservationCancelledEvent extends DomainEvent {
         this.reservationId = reservationId;
         this.customerId = customerId;
         this.reason = reason;
-        setEventType("ReservationCancelledEvent");
     }
 
     public UUID getReservationId() { return reservationId; }
     public UUID getCustomerId() { return customerId; }
     public String getReason() { return reason; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.toString();
+    }
 }

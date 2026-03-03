@@ -61,12 +61,12 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
         Reservation savedReservation = reservationRepository.save(reservation);
 
         // 4. Request payment authorization
-        eventPublisher.publish(new PaymentAuthorizationRequestedEvent(
-                savedReservation.getId().value().toString(),
-                customerId.value().toString(),
-                spotId.value(),
-                BigDecimal.valueOf(5),
-                startTime, endTime
+        eventPublisher.publish(new ReservationRequestedEvent(
+                customerId.value(),                 // UUID
+                savedReservation.getId().value(),    // UUID
+                spotId.value(),                     // String
+                startTime,
+                endTime
         ));
 
         return savedReservation.getId();
@@ -74,20 +74,29 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
 
     @Override
     public void confirmReservation(ReservationId reservationId, PaymentAuthorizationId paymentAuthId) {
+
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+       try{
+            reservation.confirm(paymentAuthId);
+            reservationRepository.save(reservation);
+            // Reserve the physical spot
+           // parkingACL.reserveSpot(reservation.getSpotId().value(), reservationId.value());
 
-        reservation.confirm(paymentAuthId);
-        reservationRepository.save(reservation);
+            eventPublisher.publish(new ReservationConfirmedEvent(
+                    reservation.getId().value(),
+                    reservation.getPaymentAuthId().value(),
+                    reservation.getSpotId().value(),
+                    reservation.getCustomerId().value()));
+       } catch (Exception ex){
+           eventPublisher.publish(new ReservationFailedEvent(
+                   reservation.getId(),
+                   reservation.getSpotId(),
+                   reservation.getCustomerId(),
+                   ex.getMessage()));
+           throw ex;
+       }
 
-        // Reserve the physical spot
-        parkingACL.reserveSpot(reservation.getSpotId().value(), reservationId.value());
-
-        eventPublisher.publish(new ReservationConfirmedEvent(
-                reservation.getId().value(),
-                reservation.getCustomerId().value(),
-                reservation.getSpotId().value(),
-                reservation.getPaymentAuthId().value()));
 
     }
 

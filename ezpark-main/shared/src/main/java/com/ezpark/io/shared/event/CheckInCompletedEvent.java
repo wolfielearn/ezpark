@@ -17,10 +17,14 @@ public class CheckInCompletedEvent extends DomainEvent {
         this.spotId = spotId;
         this.reservationId = reservationId;
         this.checkInTime = checkInTime;
-        this.setEventType("CheckInCompletedEvent");
     }
 
     public SpotId getSpotId() { return spotId; }
     public ReservationId getReservationId() { return reservationId; }
     public Instant getCheckInTime() { return checkInTime; }
+
+    @Override
+    public String partitionKey() {
+        return reservationId.value().toString();
+    }
 }

@@ -9,8 +9,12 @@ public class SpotReleasedEvent extends DomainEvent {
 
     public SpotReleasedEvent(String spotId) {
         this.spotId = spotId;
-        setEventType("SpotReleasedEvent");
     }
 
     public String getSpotId() { return spotId; }
+
+    @Override
+    public String partitionKey() {
+        return spotId;
+    }
 }
