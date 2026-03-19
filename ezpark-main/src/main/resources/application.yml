@@ -27,32 +27,26 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
         "[spring.json.add.type.headers]": false
-        linger.ms: 0
-        batch.size: 16384
-        buffer.memory: 33554432
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       auto-offset-reset: earliest
       enable-auto-commit: false
-      properties:
-        session.timeout.ms: 10000
-        heartbeat.interval.ms: 3000
-        #        "[spring.json.value.default.type]": "*"
-        "[spring.json.trusted.packages]": "com.ezpark.io"
-        group-id: reservation-ctx-group, payment-ctx-group
-  listener:
-    type: single
-    #    ack-mode: manual_immediate
-    # 👇 Skip bad records
-#    missing-topics-fatal: false
-
+    listener:
+      type: single
 kafka:
   topics:
-    reservation-events: reservation-events
-    payment-events: payment-events
-    parking-events: parking-events
-    customer-events: customer-events
+    payment-events: payment.events.v1
+    reservation-events: reservation.events.v1
+    parking-events: parking.events.v1
+    customer-events: customer.events.v1
+
+  groups:
+    payment: ezpark.payment.v1
+    reservation: ezpark.reservation.v1
+    parking: ezpark.parking.v1
+    customer: ezpark.customer.v1
+
 
 ###################
 

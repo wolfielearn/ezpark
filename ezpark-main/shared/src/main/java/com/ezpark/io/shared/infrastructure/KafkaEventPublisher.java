@@ -22,45 +22,46 @@ public class KafkaEventPublisher implements EventPublisher {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private Map<String, String> topicMapping;
 
-    @Value("${kafka.topics.customer-events:customer-events}")
+    @Value("${kafka.topics.customer-events:customer.events.v1}")
     private String customerTopic;
 
-    @Value("${kafka.topics.reservation-events:reservation-events}")
+    @Value("${kafka.topics.reservation-events:reservation.events.v1}")
     private String reservationTopic;
 
-    @Value("${kafka.topics.parking-events:parking-events}")
+    @Value("${kafka.topics.parking-events:parking.events.v1}")
     private String parkingTopic;
 
-    @Value("${kafka.topics.payment-events:payment-events}")
+    @Value("${kafka.topics.payment-events:payment.events.v1}")
     private String paymentTopic;
 
     public KafkaEventPublisher(ObjectMapper objectMapper,
-                               KafkaTemplate<String, String> kafkaTemplate,
-                               Map<String, String> topicMapping) {
+                               KafkaTemplate<String, String> kafkaTemplate) {
         this.objectMapper = objectMapper;
         this.kafkaTemplate = kafkaTemplate;
-        this.topicMapping = topicMapping;
     }
 
     @PostConstruct
     public void init() {
         this.topicMapping = Map.ofEntries(
-                Map.entry("CustomerRegisteredEvent", reservationTopic),
+                Map.entry("CustomerRegisteredEvent", customerTopic),
+
                 Map.entry("ReservationRequestedEvent", reservationTopic),
                 Map.entry("ReservationConfirmedEvent", reservationTopic),
                 Map.entry("ReservationCancelledEvent", reservationTopic),
                 Map.entry("ReservationFailedEvent", reservationTopic),
-                Map.entry("PaymentAuthorizationRequestedEvent", reservationTopic),
-                Map.entry("PaymentAuthorizationFailedEvent", reservationTopic),
-                Map.entry("PaymentAuthorizedEvent", reservationTopic),
-                Map.entry("PaymentCapturedEvent", reservationTopic),
-                Map.entry("PaymentRefundedEvent", reservationTopic),
-                Map.entry("SpotReleasedEvent", reservationTopic),
                 Map.entry("ReservationCompletedEvent", reservationTopic),
                 Map.entry("CheckInCompletedEvent", reservationTopic),
+
+                Map.entry("PaymentAuthorizationRequestedEvent", paymentTopic),
+                Map.entry("PaymentAuthorizationFailedEvent", paymentTopic),
+                Map.entry("PaymentAuthorizedEvent", paymentTopic),
+                Map.entry("PaymentCapturedEvent", paymentTopic),
+                Map.entry("PaymentRefundedEvent", paymentTopic),
+
                 Map.entry("CheckOutCompletedEvent", parkingTopic),
+                Map.entry("SpotReleasedEvent", parkingTopic),
                 Map.entry("SpotMaintenanceEvent", parkingTopic),
-                Map.entry("SpotReservedEvent", reservationTopic)
+                Map.entry("SpotReservedEvent", parkingTopic)
         );
     }
     @Override
@@ -69,7 +70,7 @@ public class KafkaEventPublisher implements EventPublisher {
             String jsonEvent = objectMapper.writeValueAsString(event);
             String topic = determineTopic(event);
 
-            kafkaTemplate.send(topic, jsonEvent);
+            kafkaTemplate.send(topic,event.partitionKey(), jsonEvent);
             LOGGER.info("Published to Kafka - Topic: {}, Event: {}", topic, event.getClass().getSimpleName());
         } catch ( JsonProcessingException e) {
             LOGGER.error("Failed to serialize  event", e);
