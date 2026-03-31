@@ -1,14 +1,11 @@
 package com.ezpark.io.reservation.infrastructure.event;
 
 import com.ezpark.io.reservation.domain.port.inbound.ReservationEventHandler;
-import com.ezpark.io.shared.event.PaymentAuthorizedEvent;
+import com.ezpark.io.shared.event.SpotReservedEvent;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -24,24 +21,11 @@ public class ReservationEventKafkaConsumer {
         this.reservationEventHandler = reservationEventHandler;
         this.objectMapper = objectMapper;
     }
-    @KafkaListener(
-            topics = "${kafka.topics.payment-events}",
-            groupId = "${kafka.groups.reservation}"
-    )
-    public void handlePaymentEvents(String message) { } // dispatch
 
     @KafkaListener(
             topics = "${kafka.topics.parking-events}",
-            groupId = "${kafka.groups.reservation}"
-    )
-    public void handleParkingEvents(String message){}
-
-
-    @KafkaListener(
-            topics = "${kafka.topics.reservation-events}",
-            groupId = "${kafka.groups.payment}"
-    )
-    public void handleReservationEvent(String message) {
+            groupId = "${kafka.groups.reservation}")
+    public void handleSpotReservedEvent(String message) {
 
         try {
             JsonNode jsonNode = objectMapper.readTree(message);
@@ -50,18 +34,15 @@ public class ReservationEventKafkaConsumer {
                 LOGGER.warn("Missing eventType. message={}", message);
                 return;
             }
-
-            if ("PaymentAuthorizedEvent".equals(eventType)) {
-                LOGGER.info("--------HANDLE PaymentAuthorizedEvent CALLED SUCCESSFULLY----------------");
-                PaymentAuthorizedEvent event = objectMapper.readValue(message, PaymentAuthorizedEvent.class);
-                LOGGER.info("Received PaymentAuthorizedEvent: {}", event.getEventId());
-                reservationEventHandler.handlePaymentAuthorized(event);
+            if ("SpotReservedEvent".equals(eventType)) {
+                SpotReservedEvent event = objectMapper.readValue(message, SpotReservedEvent.class);
+                LOGGER.info("Received SpotReservedEvent: {}", event.getEventId());
+                reservationEventHandler.handleSpotReserved(event);
             } else {
                 LOGGER.debug("Skipping: {}", eventType);
-
             }
         } catch (Exception e) {
-            LOGGER.error("Failed to process payment authorization message. Message: {}", message, e);
+            LOGGER.error("Failed to process reservation event message. Message: {}", message, e);
         }
     }
 
