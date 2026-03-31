@@ -1,7 +1,6 @@
 package com.ezpark.io.parking.infrastructure.persistence.adapter;
 
 import com.ezpark.io.parking.domain.model.ParkingSpot;
-import com.ezpark.io.parking.domain.model.SpotStatus;
 import com.ezpark.io.parking.domain.port.outbound.ParkingSpotRepository;
 import com.ezpark.io.parking.infrastructure.persistence.entities.JpaParkingSpotEntity;
 import com.ezpark.io.parking.infrastructure.persistence.mapper.JpaParkingEntityModelMapper;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class JpaParkingSpotRepositoryAdapter implements ParkingSpotRepository {
@@ -32,7 +32,7 @@ public class JpaParkingSpotRepositoryAdapter implements ParkingSpotRepository {
 
     @Override
     public Optional<ParkingSpot> findById(SpotId spotId) {
-        String id = spotId.value();
+        UUID id = spotId.value();
         Optional<JpaParkingSpotEntity> jpaEntityOpt = jpaRepository.findById(id);
         if(jpaEntityOpt.isPresent()){
 
