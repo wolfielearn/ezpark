@@ -7,10 +7,10 @@ import java.time.Instant;
 import java.util.UUID;
 
 
-public interface ParkingSpotAntiCorruptionService {
+public interface ParkingSpotACLService {
     boolean isSpotAvailable(String spotId);
     SpotDetailsView getSpotDetails(String spotId);
     boolean reserveSpot(String spotId, UUID reservationId);
-    boolean checkAvailability(String spotId, Instant startTime, Instant endTime);
+    boolean checkAvailability(UUID spotId, Instant startTime, Instant endTime);
 
 }
