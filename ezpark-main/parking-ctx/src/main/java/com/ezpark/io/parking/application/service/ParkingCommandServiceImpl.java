@@ -2,9 +2,11 @@ package com.ezpark.io.parking.application.service;
 
 
 import com.ezpark.io.parking.domain.model.ParkingSpot;
+import com.ezpark.io.parking.domain.model.SpotStatus;
 import com.ezpark.io.parking.domain.port.inbound.ParkingCommandService;
 import com.ezpark.io.parking.domain.port.outbound.ParkingSpotRepository;
 import com.ezpark.io.shared.event.*;
+import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import com.ezpark.io.shared.kernel.SpotId;
 import org.springframework.stereotype.Service;
@@ -24,15 +26,20 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
     }
 
     @Override
-    public void reserveSpot(SpotId spotId, ReservationId reservationId) {
+    public void reserveSpot(SpotId spotId, ReservationId reservationId, PaymentAuthorizationId paymentAuthorizationId) {
         ParkingSpot spot = parkingSpotRepository.findById(spotId)
                 .orElseThrow(() -> new IllegalArgumentException("Parking spot not found"));
+        try{
+            spot.reserve(reservationId);
+            parkingSpotRepository.save(spot);
 
-        spot.reserve(reservationId);
-        parkingSpotRepository.save(spot);
-
-        eventPublisher.publish(new SpotReservedEvent(spotId.value(), reservationId.value()));
-    }
+            eventPublisher.publish(new SpotReservedEvent(spotId.value() , reservationId.value(), paymentAuthorizationId.value()));
+            } catch (IllegalStateException ex) {
+            // Handle reservation failure (e.g., spot already reserved)
+            eventPublisher.publish(new SpotReservationFailedEvent(spotId.value(), reservationId.value(), ex.getMessage()));
+            throw ex;
+            }
+        }
 
     @Override
     public void checkIn(SpotId spotId) {
