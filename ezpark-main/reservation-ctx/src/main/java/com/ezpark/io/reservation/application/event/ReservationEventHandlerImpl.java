@@ -3,6 +3,8 @@ package com.ezpark.io.reservation.application.event;
 import com.ezpark.io.reservation.domain.port.inbound.ReservationCommandService;
 import com.ezpark.io.reservation.domain.port.inbound.ReservationEventHandler;
 import com.ezpark.io.shared.event.PaymentAuthorizedEvent;
+import com.ezpark.io.shared.event.ReservationConfirmedEvent;
+import com.ezpark.io.shared.event.SpotReservedEvent;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
 import org.springframework.stereotype.Component;
@@ -18,11 +20,11 @@ public class ReservationEventHandlerImpl implements ReservationEventHandler {
     }
 
     @Override
-    public void handlePaymentAuthorized(PaymentAuthorizedEvent event) {
+    public void handleSpotReserved(SpotReservedEvent event) {
+        // Confirm reservation when payment is authorized and spot reserved
         ReservationId reservationId = ReservationId.from(event.getReservationId());
-        PaymentAuthorizationId paymentId = PaymentAuthorizationId.from(event.getPaymentAuthId());
-        // Confirm reservation when payment is authorized
-        reservationCommandService.confirmReservation(reservationId, paymentId );
+        PaymentAuthorizationId paymentAuthorizationId = PaymentAuthorizationId.from(event.getPaymentAuthorizationId());
+        reservationCommandService.confirmReservation(reservationId , paymentAuthorizationId);
     }
 
     @Override
