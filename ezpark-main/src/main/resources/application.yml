@@ -19,6 +19,9 @@ spring:
     show-sql: false
     defer-datasource-initialization: true #We have to ensure that the values are not created multiple times.
     # If our database schema is created by Hibernate, we should also add the following property to run our script only after Hibernate made its changes.
+  sql:
+    init:
+      mode: always
 
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
