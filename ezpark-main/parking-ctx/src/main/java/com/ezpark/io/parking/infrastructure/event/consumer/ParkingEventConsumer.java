@@ -1,7 +1,6 @@
 package com.ezpark.io.parking.infrastructure.event.consumer;
 
 import com.ezpark.io.parking.domain.port.inbound.ParkingEventHandler;
-import com.ezpark.io.payment.infrastructure.event.consumers.PaymentEventKafkaConsumer;
 import com.ezpark.io.shared.event.PaymentAuthorizedEvent;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ParkingEventConsumer {
-    Logger LOGGER = LoggerFactory.getLogger(PaymentEventKafkaConsumer.class);
+    Logger LOGGER = LoggerFactory.getLogger(ParkingEventConsumer.class);
     private final ParkingEventHandler parkingEventHandler;
     private final ObjectMapper objectMapper;
 
@@ -35,14 +34,14 @@ public class ParkingEventConsumer {
             }
             if ("PaymentAuthorizedEvent".equals(eventType)) {
                 PaymentAuthorizedEvent event = objectMapper.readValue(message, PaymentAuthorizedEvent.class);
-                LOGGER.info("Received ReservationRequestedEvent: {}", event.getEventId());
+                LOGGER.info("Received PaymentAuthorizedEvent: {}", event.getEventId());
                 parkingEventHandler.handlePaymentAuthorizedEvent( event);
             } else {
                 LOGGER.error("Skipping {}.", eventType);
             }
         } catch (Exception ex) {
-            LOGGER.error("Failed to process reservation requested message. Message: {}", message, ex);
-            throw new RuntimeException("Failed to process reservation requested message", ex);
+            LOGGER.error("Failed to process PaymentAuthorizedEvent message. Message: {}", message, ex);
+            throw new RuntimeException("Failed to process PaymentAuthorizedEvent message", ex);
         }
     }
 }
