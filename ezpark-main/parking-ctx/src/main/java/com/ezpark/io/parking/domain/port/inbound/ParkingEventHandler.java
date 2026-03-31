@@ -1,8 +1,6 @@
 package com.ezpark.io.parking.domain.port.inbound;
 
-import com.ezpark.io.shared.event.PaymentCapturedEvent;
-import com.ezpark.io.shared.event.ReservationCancelledEvent;
-import com.ezpark.io.shared.event.ReservationConfirmedEvent;
+import com.ezpark.io.shared.event.*;
 
 public interface ParkingEventHandler {
 
@@ -10,5 +8,5 @@ public interface ParkingEventHandler {
     public void handlePaymentCaptured(PaymentCapturedEvent event);
     public void handleReservationCancelled(ReservationCancelledEvent event);
 
-
+    void handlePaymentAuthorizedEvent(PaymentAuthorizedEvent event);
 }
