@@ -7,10 +7,10 @@ import com.ezpark.io.payment.domain.model.PaymentMethod;
 import com.ezpark.io.payment.domain.port.inbound.PaymentCommandService;
 import com.ezpark.io.payment.domain.port.outbound.PaymentAuthorizationRepository;
 import com.ezpark.io.payment.domain.port.outbound.ReservationAntiCorruptionService;
-import com.ezpark.io.shared.event.EventPublisher;
-import com.ezpark.io.shared.event.PaymentAuthorizedEvent;
+import com.ezpark.io.shared.event.*;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
+import com.ezpark.io.shared.kernel.SpotId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,22 +31,29 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
     }
 
     @Override
-    public PaymentAuthorizationId authorizePayment(ReservationId reservationId, Amount amount, PaymentMethod paymentMethod) {
-        // Get reservation details for billing
-        // to be implemented later
+    public PaymentAuthorizationId authorizePayment(ReservationId reservationId, SpotId spotId, Amount amount, PaymentMethod paymentMethod) {
+
        // var reservationView = reservationACL.getReservationForBilling(reservationId);
+        try {
+            PaymentAuthorization auth = PaymentAuthorization.create(reservationId, amount, paymentMethod);
+            paymentAuthorizationRepository.save(auth);
 
-        // convert VOs to primitives
+            eventPublisher.publish(new PaymentAuthorizedEvent(
+                    auth.getId().value(),
+                    reservationId.value(),
+                    spotId.value(),
+                    amount.value()));
 
-        PaymentAuthorization auth = PaymentAuthorization.create(reservationId, amount, paymentMethod);
-        paymentAuthorizationRepository.save(auth);
-
-        eventPublisher.publish(new PaymentAuthorizedEvent(
-                auth.getId().value(),
-                reservationId.value(),
-                amount.value()));
-
-        return auth.getId();
+            return auth.getId();
+        } catch (Exception ex) {
+            // Handle payment failure
+            eventPublisher.publish(new PaymentAuthorizationFailedEvent(
+                    reservationId,
+                    amount.value(),
+                    ex.getMessage()
+            ));
+            throw new RuntimeException("Payment authorization failed", ex);
+        }
     }
 
     @Override
@@ -57,10 +64,10 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         auth.capture();
         paymentAuthorizationRepository.save(auth);
 
-//        eventPublisher.publish(new PaymentCapturedEvent(
-//                paymentAuthId.value(),
-//                auth.getReservationId().value(),
-//                auth.getAmount().value()));
+        eventPublisher.publish(new PaymentCapturedEvent(
+                paymentAuthId.value(),
+                auth.getReservationId().value(),
+                auth.getAmount().value()));
     }
 
     @Override
@@ -82,10 +89,10 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         auth.refund();
         paymentAuthorizationRepository.save(auth);
 
-//        eventPublisher.publish(new PaymentRefundedEvent(
-//                paymentAuthId,
-//                auth.getReservationId().value(),
-//                auth.getAmount().value(),
-//                "Customer refunded"));
+        eventPublisher.publish(new PaymentRefundedEvent(
+                paymentAuthId,
+                auth.getReservationId().value(),
+                auth.getAmount().value(),
+                "Customer refunded"));
     }
 }
