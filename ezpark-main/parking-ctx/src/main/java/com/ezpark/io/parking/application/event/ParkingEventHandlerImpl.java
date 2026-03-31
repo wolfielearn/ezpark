@@ -1,9 +1,9 @@
 package com.ezpark.io.parking.application.event;
 
 
-import com.ezpark.io.parking.application.service.ParkingQueryServiceImpl;
 import com.ezpark.io.parking.domain.port.inbound.ParkingCommandService;
 import com.ezpark.io.parking.domain.port.inbound.ParkingEventHandler;
+import com.ezpark.io.parking.domain.port.inbound.ParkingQueryService;
 import com.ezpark.io.shared.event.*;
 import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
 import com.ezpark.io.shared.kernel.ReservationId;
@@ -12,18 +12,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import java.util.UUID;
-
 @Service
 public class ParkingEventHandlerImpl implements ParkingEventHandler {
 
     private final ParkingCommandService parkingCommandService;
-    private final ParkingQueryServiceImpl parkingQueryService ;
+    private final ParkingQueryService parkingQueryService;
     private final EventPublisher eventPublisher;
 
     public ParkingEventHandlerImpl(ParkingCommandService parkingCommandService,
-                                                        ParkingQueryServiceImpl parkingQueryService,
-                                                        EventPublisher eventPublisher) {
+                                   ParkingQueryService parkingQueryService,
+                                   EventPublisher eventPublisher) {
         this.parkingCommandService = parkingCommandService;
         this.parkingQueryService = parkingQueryService;
         this.eventPublisher = eventPublisher;
