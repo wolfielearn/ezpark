@@ -52,7 +52,6 @@ public class KafkaEventPublisher implements EventPublisher {
                 Map.entry("ReservationCompletedEvent", reservationTopic),
                 Map.entry("CheckInCompletedEvent", reservationTopic),
 
-                Map.entry("PaymentAuthorizationRequestedEvent", paymentTopic),
                 Map.entry("PaymentAuthorizationFailedEvent", paymentTopic),
                 Map.entry("PaymentAuthorizedEvent", paymentTopic),
                 Map.entry("PaymentCapturedEvent", paymentTopic),
@@ -61,7 +60,8 @@ public class KafkaEventPublisher implements EventPublisher {
                 Map.entry("CheckOutCompletedEvent", parkingTopic),
                 Map.entry("SpotReleasedEvent", parkingTopic),
                 Map.entry("SpotMaintenanceEvent", parkingTopic),
-                Map.entry("SpotReservedEvent", parkingTopic)
+                Map.entry("SpotReservedEvent", parkingTopic),
+                Map.entry("SpotReservationFailedEvent", parkingTopic)
         );
     }
     @Override
