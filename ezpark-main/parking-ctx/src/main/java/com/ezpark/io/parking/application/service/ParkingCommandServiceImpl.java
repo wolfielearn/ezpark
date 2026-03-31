@@ -57,6 +57,9 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
         ParkingSpot spot = parkingSpotRepository.findById(spotId)
                 .orElseThrow(() -> new IllegalArgumentException("Parking spot not found"));
 
+        // Capture before checkOut() clears it
+        ReservationId reservationId = spot.getCurrentReservationId();
+
         // Calculate actual duration (in real system, would use actual times)
         java.time.Duration actualDuration = java.time.Duration.ofHours(2);
 
@@ -64,7 +67,7 @@ public class ParkingCommandServiceImpl implements ParkingCommandService {
         parkingSpotRepository.save(spot);
 
         eventPublisher.publish(new CheckOutCompletedEvent(
-                spot.getCurrentReservationId(),
+                reservationId,
                 spotId,
                 actualDuration,
                 java.time.Instant.now()
