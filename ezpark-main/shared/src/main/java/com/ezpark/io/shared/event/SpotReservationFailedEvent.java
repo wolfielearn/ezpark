@@ -6,20 +6,20 @@ import java.util.UUID;
 public class SpotReservationFailedEvent extends DomainEvent {
     private UUID spotId;
     private UUID reservationId;
-    private String message;
+    private String failureReason;
 
     public SpotReservationFailedEvent() {
     }
 
-    public SpotReservationFailedEvent(UUID spotId, UUID reservationId, String message) {
+    public SpotReservationFailedEvent(UUID spotId, UUID reservationId, String failureReason) {
         this.spotId = spotId;
         this.reservationId = reservationId;
-        this.message =message;
+        this.failureReason = failureReason;
     }
 
     public UUID getSpotId() { return spotId; }
     public UUID getReservationId() { return reservationId; }
-    public String getMessage() { return message; }
+    public String getFailureReason() { return failureReason; }
 
     @Override
     public String partitionKey() {
