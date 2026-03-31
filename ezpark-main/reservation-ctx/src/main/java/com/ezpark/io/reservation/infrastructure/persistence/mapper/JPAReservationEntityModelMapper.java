@@ -39,7 +39,7 @@ public class JPAReservationEntityModelMapper {
 
         ReservationId reservationId = ReservationId.from(entity.getId());
         CustomerId customerId = CustomerId.from(entity.getCustomerId().getValue());
-        SpotId spotId = SpotId.fromString(entity.getSpotId().getValue());
+        SpotId spotId = SpotId.fromUUID(entity.getSpotId().getValue());
         TimeSlot timeSlot = new TimeSlot(entity.getTimeSlot().getStartTime(), entity.getTimeSlot().getEndTime());
         PaymentAuthorizationId paymentAuthorizationId = null;
         if(entity.getPaymentAuthId() != null){

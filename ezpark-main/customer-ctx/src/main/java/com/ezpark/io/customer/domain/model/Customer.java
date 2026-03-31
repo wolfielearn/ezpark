@@ -25,7 +25,7 @@ public class Customer {
         this.id = Objects.requireNonNull(id, "Customer ID cannot be null");
         this.email = Objects.requireNonNull(email, "Email cannot be null");
         this.name = validateName(name);
-        this.domainEvents.add(new CustomerRegisteredEvent(id.value(), name, email.value()));
+        this.domainEvents.add(new CustomerRegisteredEvent(id, name, email.value()));
     }
 
     // Factory method

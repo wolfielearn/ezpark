@@ -20,6 +20,6 @@ public class SpotMaintenanceEvent extends DomainEvent {
 
     @Override
     public String partitionKey() {
-        return spotId.value();
+        return spotId.value().toString();
     }
 }

@@ -8,7 +8,7 @@ import java.util.UUID;
 public class ReservationRequestedEvent extends DomainEvent {
     private UUID customerId;
     private UUID reservationId;
-    private String spotId;
+    private UUID spotId;
     private BigDecimal amount;
     private Instant startTime;
     private Instant endTime;
@@ -16,7 +16,7 @@ public class ReservationRequestedEvent extends DomainEvent {
     public ReservationRequestedEvent() {
     }
 
-    public ReservationRequestedEvent(UUID customerId, UUID reservationId, String spotId, Instant startTime, Instant endTime) {
+    public ReservationRequestedEvent(UUID customerId, UUID reservationId, UUID spotId, Instant startTime, Instant endTime) {
         this.customerId = customerId;
         this.reservationId = reservationId;
         this.spotId = spotId;
@@ -25,7 +25,7 @@ public class ReservationRequestedEvent extends DomainEvent {
     }
 
     public UUID getCustomerId() { return customerId; }
-    public String getSpotId() { return spotId; }
+    public UUID getSpotId() { return spotId; }
     public UUID getReservationId() {
         return reservationId;
     }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.*;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -29,7 +30,7 @@ public class ReservationController {
         System.out.println(startTime.isAfter(endTime));
         ReservationId reservationId = reservationCommandService.createReservation(
                 CustomerId.fromString(request.customerId()),
-                SpotId.fromString(request.spotId()),
+                SpotId.fromUUID(UUID.fromString(request.spotId())),
                 new TimeSlot(startTime, endTime));
         return ResponseEntity.ok("Reservation SUCCEEDED with id : " +reservationId.value().toString());
 

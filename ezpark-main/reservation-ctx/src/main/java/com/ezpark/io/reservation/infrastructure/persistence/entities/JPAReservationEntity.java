@@ -2,14 +2,10 @@ package com.ezpark.io.reservation.infrastructure.persistence.entities;
 
 
 import com.ezpark.io.reservation.domain.model.ReservationStatus;
-import com.ezpark.io.reservation.domain.model.TimeSlot;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaCustomerId;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaPaymentAuthorizationId;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaSpotId;
 import com.ezpark.io.reservation.infrastructure.persistence.entities.VOs.JpaTimeSlot;
-import com.ezpark.io.shared.kernel.CustomerId;
-import com.ezpark.io.shared.kernel.PaymentAuthorizationId;
-import com.ezpark.io.shared.kernel.SpotId;
 import jakarta.persistence.*;
 
 import java.util.UUID;

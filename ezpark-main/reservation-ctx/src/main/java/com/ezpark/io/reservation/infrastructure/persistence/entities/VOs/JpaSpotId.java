@@ -4,19 +4,19 @@ import java.util.UUID;
 
 public class JpaSpotId {
 
-    private String value;
+    private UUID value;
 
     public JpaSpotId(){}
 
-    public JpaSpotId(String value) {
+    public JpaSpotId(UUID value) {
         this.value = value;
     }
 
-    public String getValue() {
+    public UUID getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(UUID value) {
         this.value = value;
     }
 }

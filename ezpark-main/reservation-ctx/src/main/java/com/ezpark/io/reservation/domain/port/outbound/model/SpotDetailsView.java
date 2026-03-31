@@ -5,6 +5,7 @@ import com.ezpark.io.shared.kernel.SpotId;
 
 public record SpotDetailsView(
         SpotId spotId,
+        String spotNumber,
         String location,
         String spotType,
         boolean isAvailable

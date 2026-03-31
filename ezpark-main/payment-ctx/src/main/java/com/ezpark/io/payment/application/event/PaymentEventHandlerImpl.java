@@ -4,8 +4,9 @@ import com.ezpark.io.payment.domain.model.Amount;
 import com.ezpark.io.payment.domain.model.PaymentMethod;
 import com.ezpark.io.payment.domain.port.inbound.PaymentCommandService;
 import com.ezpark.io.payment.domain.port.inbound.PaymentEventHandler;
-import com.ezpark.io.shared.event.PaymentAuthorizationRequestedEvent;
+import com.ezpark.io.shared.event.ReservationRequestedEvent;
 import com.ezpark.io.shared.kernel.ReservationId;
+import com.ezpark.io.shared.kernel.SpotId;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -19,11 +20,13 @@ public class PaymentEventHandlerImpl implements PaymentEventHandler {
     }
 
     @Override
-    public void handlePaymentAuthorizationRequested(PaymentAuthorizationRequestedEvent event) {
-        UUID uuid = UUID.fromString(event.getReservationId());
+    public void handleReservationRequested(ReservationRequestedEvent event) {
+        UUID uuid = event.getReservationId();
         ReservationId reservationId = ReservationId.from(uuid);
-        Amount amount = new Amount(event.getAmount());
+        SpotId spotId =SpotId.fromUUID(event.getSpotId());
+        // TODO: replace with real pricing logic
+        Amount amount = new Amount(/* BigDecimal */ java.math.BigDecimal.valueOf(5));
 
-        paymentCommandService.authorizePayment(reservationId, amount, PaymentMethod.CREDIT_CARD);
+        paymentCommandService.authorizePayment(reservationId, spotId,  amount, PaymentMethod.CREDIT_CARD);
     }
 }

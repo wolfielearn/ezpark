@@ -5,13 +5,16 @@ import com.ezpark.io.parking.domain.model.SpotStatus;
 import com.ezpark.io.parking.domain.model.SpotType;
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "parking", schema = "parking")
+
 public class JpaParkingSpotEntity {
 
     @Id
     @Column(name = "Spot_id")
-    private String id;
+    private UUID id;
 
     @Embedded
     private Location location;
@@ -30,15 +33,16 @@ public class JpaParkingSpotEntity {
 
     protected JpaParkingSpotEntity() {}
 
-    public JpaParkingSpotEntity(String id, Location location, SpotType type) {
+    public JpaParkingSpotEntity(UUID id, Location location, SpotType type) {
         this.id = id;
         this.location = location;
         this.type = type;
-        this.status = SpotStatus.AVAILABLE;
+         this.status = SpotStatus.AVAILABLE;
     }
 
-    public String getId() {return id;}
-    public void setId(String id) {this.id = id;}
+    public UUID getId() {return id;}
+    public void setId(UUID id) {this.id = id;}
+
     public Location getLocation() {return location;}
     public void setLocation(Location location) {this.location = location;}
     public SpotType getType() {return type;}
