@@ -14,13 +14,25 @@ public class ParkingSpot {
 
     protected ParkingSpot() {}
 
-    public ParkingSpot(SpotId id, Location location, SpotType type) {
+    private  ParkingSpot(SpotId id, Location location, SpotType type, ReservationId currentReservationId, SpotStatus status) {
         this.id = id;
         this.location = location;
         this.type = type;
-        this.status = SpotStatus.AVAILABLE;
+        this.currentReservationId = currentReservationId;
+        this.status = status;
     }
 
+    // Factory method
+    public static ParkingSpot create(Location location, SpotType type) {
+        SpotId spotId = SpotId.newId();
+        return new ParkingSpot(spotId, location, type, null, SpotStatus.AVAILABLE);
+    }
+
+    // Reconstruction constructor (for loading from persistence)
+    public static ParkingSpot reconstruct(SpotId spotId, Location location, SpotType type, SpotStatus status, ReservationId currentReservationId) {
+
+        return new ParkingSpot(spotId, location, type, currentReservationId, status);
+    }
     // In reserve(), you could publish SpotReservedEvent
     // Core business logic
     public void reserve(ReservationId reservationId) {

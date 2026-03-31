@@ -24,11 +24,11 @@ public class ParkingSpotController {
     public boolean reserveSpot(@PathVariable("spotId") String spotId,
                                @PathVariable("reservationId") String reservationId){
 
-        SpotId spotIdUUID = SpotId.fromString(spotId);
+        SpotId spotIdUUID = SpotId.fromUUID(UUID.fromString(spotId));
         ReservationId reservationIdUUID = ReservationId.from(UUID.fromString(reservationId));
         try{
 
-            parkingCommandService.reserveSpot(spotIdUUID, reservationIdUUID);
+            parkingCommandService.reserveSpot(spotIdUUID, reservationIdUUID, null);
             return true;
         }catch (Exception e){
             return false;
