@@ -12,7 +12,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>EZPark Payment Context</name>
+    <name>Payment Context</name>
     <description>Payment processing bounded context</description>
 
     <dependencies>
